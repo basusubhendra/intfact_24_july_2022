@@ -31,7 +31,7 @@ void* factorize(void* arg) {
 	FILE* fe = fopen64("./e.txt", "r");
 	char pp = 0, ee = 0;
 	long tuple_counter = 0;
-	int polarity = 0;
+	int polarity = 1;
 	int t = 0;
 	vector<char> ps;
 	vector<char> es;
