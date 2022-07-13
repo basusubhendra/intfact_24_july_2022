@@ -1,1 +1,1 @@
-g++ ./intfact.cpp
+g++ -o ./factorize ./intfact.cpp `getconf LFS_CFLAGS`
