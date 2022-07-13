@@ -3,7 +3,10 @@
 #include <string.h>
 #include <vector>
 #include <pthread.h>
+#include <string>
+#include <boost/lexical_cast.hpp>
 using namespace std;
+using namespace boost;
 
 void* characterize(char* num, vector<char*>& tuples, vector<char*>& reverse_tuples) {
 	long l = strlen(num);
@@ -26,9 +29,37 @@ void* factorize(void* arg) {
 	vector<char*>* tuples = (vector<char*>*) arg;
 	FILE* fp = fopen64("./pi.txt", "r");
 	FILE* fe = fopen64("./e.txt", "r");
+	char pp = 0, ee = 0;
+	long tuple_counter = 0;
+	int polarity = 0;
+	int t = 0;
+	vector<char> ps;
+	vector<char> es;
+	std::string factor = "";
+	while (1) {
+		fscanf(fp, "%c", &pp);
+		fscanf(fe, "%c", &ee);
+		ps.push_back(pp);
+		es.push_back(ee);
+		char* tuple = tuples->at(tuple_counter);
+		if (t == polarity && tuple[0] == pp && tuple[1] == ee) {
+			vector<char>::reverse_iterator rit1 = ps.rbegin();
+			vector<char>::reverse_iterator rit2 = es.rbegin();
+			long hits = 0;
+			for ( ; rit1 != ps.rend(), rit2 != es.rend(); ++rit1, ++rit2) {
+				if (*rit1 == pp && *rit2 == ee) {
+					++hits;
+				}
+			}
+			factor += boost::lexical_cast<std::string>(hits);
+			polarity = 1 - polarity;
+			++tuple_counter;
+		}
+		t = 1 - t;
+	}
 	fclose(fp);
 	fclose(fe);
-	return 0;
+	return strdup((char*) factor.c_str());
 }
 
 int main(int argc, char* argv[]) {
