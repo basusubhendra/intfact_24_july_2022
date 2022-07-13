@@ -74,6 +74,10 @@ int main(int argc, char* argv[]) {
 	pthread_create(&thread_id2, NULL, factorize, reverse_tuples);
 	pthread_join(thread_id1, (void**) &factor1);
 	pthread_join(thread_id2, (void**) &factor2);
+	for (int i = 0; i < tuples->size(); ++i) {
+		free(tuples->at(i));
+		free(reverse_tuples->at(i));
+	}
 	free(tuples);
 	free(reverse_tuples);
 	return 0;
