@@ -20,9 +20,190 @@ void* characterize(char* num, vector<char*>& tuples) {
 	return 0;
 }
 
-void* factorize(char* tuple, int& factor1, int& factor2, int& polarity) {
+void* factorize(char* tuple, int stage, int& factor1, int& factor2, int& polarity) {
 	FILE* fp = fopen64("./pi.txt","r");
 	FILE* fe = fopen64("./e.txt","r");
+	int t = 0;
+	char pp = 0, ee = 0, last_pp = 0, last_ee = 0;
+	int hit = 1;
+	while (1) {
+		fscanf(fp, "%c", &pp);
+		fscanf(fe, "%c", &ee);
+		if (t == 0 && pp == tuple[0] && ee == tuple[1]) {
+			if (polarity == -1) {
+				int pk = pp - '0';
+				int ek = ee - '0';
+				char _pp = 0, _ee = 0;
+				fscanf(fp, "%c", &_pp);
+				fscanf(fe, "%c", &_ee);
+				int _pk = _pp - '0';
+				int _ek = _ee - '0';
+				int _last_pk = last_pp - '0';
+				int _last_ek = last_ee - '0';
+				if (pk > ek) {
+					if (_ek < _last_ek) {
+						_ek += 10;
+					}
+					if (_last_pk < _pk) {
+						_last_pk += 10;
+					}
+					factor2 = _ek - _last_ek;
+					factor1 = _last_pk - _pk;
+				} else if (pk < ek) {
+					if (_last_ek < _ek) {
+						_last_ek += 10;
+					}
+					if (_pk < _last_pk) {
+						_pk += 10;
+					}
+					factor2 = _last_ek - _ek;
+					factor1 = _pk - _last_pk;
+				} else if (pk == ek) {
+					if (_last_ek < _ek) {
+						_last_ek += 10;
+					}
+					if (_last_pk < _pk) {
+						_last_pk += 10;
+					}
+					factor2 = _last_ek - _ek;
+					factor1 = _last_pk - _pk;
+				}
+				polarity = t;
+			} else if (polarity == (1 - t)) {
+				if (hit == stage) {
+					int pk = pp - '0';
+					int ek = ee - '0';
+					char _pp = 0, _ee = 0;
+					fscanf(fp, "%c", &_pp);
+					fscanf(fe, "%c", &_ee);
+					int _pk = _pp - '0';
+					int _ek = _ee - '0';
+					int _last_pk = last_pp - '0';
+					int _last_ek = last_ee - '0';
+					if (pk > ek) {
+						if (_ek < _last_ek) {
+							_ek += 10;
+						}
+						if (_last_pk < _pk) {
+							_last_pk += 10;
+						}
+						factor2 = _ek - _last_ek;
+						factor1 = _last_pk - _pk;
+					} else if (pk < ek) {
+						if (_last_ek < _ek) {
+							_last_ek += 10;
+						}
+						if (_pk < _last_pk) {
+							_pk += 10;
+						}
+						factor2 = _last_ek - _ek;
+						factor1 = _pk - _last_pk;
+					} else if (pk == ek) {
+						if (_last_ek < _ek) {
+							_last_ek += 10;
+						}
+						if (_last_pk < _pk) {
+							_last_pk += 10;
+						}
+						factor2 = _last_ek - _ek;
+						factor1 = _last_pk - _pk;
+					}
+					polarity = t;
+				} else {
+				}
+			} else {
+			}
+			++hit;
+		} else if (t == 1 && pp == tuple[0] && ee == tuple[1]) {
+			if (polarity == -1) {
+				int pk = pp - '0';
+				int ek = ee - '0';
+				char _pp = 0, _ee = 0;
+				fscanf(fp, "%c", &_pp);
+				fscanf(fe, "%c", &_ee);
+				int _pk = _pp - '0';
+				int _ek = _ee - '0';
+				int _last_pk = last_pp - '0';
+				int _last_ek = last_ee - '0';
+				if (pk > ek) {
+					if (_ek < _last_ek) {
+						_ek += 10;
+					}
+					if (_last_pk < _pk) {
+						_last_pk += 10;
+					}
+					factor2 = _ek - _last_ek;
+					factor1 = _last_pk - _pk;
+				} else if (pk < ek) {
+					if (_last_ek < _ek) {
+						_last_ek += 10;
+					}
+					if (_pk < _last_pk) {
+						_pk += 10;
+					}
+					factor2 = _last_ek - _ek;
+					factor1 = _pk - _last_pk;
+				} else if (pk == ek) {
+					if (_last_ek < _ek) {
+						_last_ek += 10;
+					}
+					if (_last_pk < _pk) {
+						_last_pk += 10;
+					}
+					factor2 = _last_ek - _ek;
+					factor1 = _last_pk - _pk;
+				}
+				polarity = t;
+			} else if (polarity == (1 - t)) {
+				if (hit == stage) {
+					int pk = pp - '0';
+					int ek = ee - '0';
+					char _pp = 0, _ee = 0;
+					fscanf(fp, "%c", &_pp);
+					fscanf(fe, "%c", &_ee);
+					int _pk = _pp - '0';
+					int _ek = _ee - '0';
+					int _last_pk = last_pp - '0';
+					int _last_ek = last_ee - '0';
+					if (pk > ek) {
+						if (_ek < _last_ek) {
+							_ek += 10;
+						}
+						if (_last_pk < _pk) {
+							_last_pk += 10;
+						}
+						factor2 = _ek - _last_ek;
+						factor1 = _last_pk - _pk;
+					} else if (pk < ek) {
+						if (_last_ek < _ek) {
+							_last_ek += 10;
+						}
+						if (_pk < _last_pk) {
+							_pk += 10;
+						}
+						factor2 = _last_ek - _ek;
+						factor1 = _pk - _last_pk;
+					} else if (pk == ek) {
+						if (_last_ek < _ek) {
+							_last_ek += 10;
+						}
+						if (_last_pk < _pk) {
+							_last_pk += 10;
+						}
+						factor2 = _last_ek - _ek;
+						factor1 = _last_pk - _pk;
+					}
+					polarity = t;
+				} else {
+				}
+			} else {
+			}
+			++hit;
+		}
+		t = 1 - t;
+		last_pp = pp;
+		last_ee = ee;
+	}
 	fclose(fp);
 	fclose(fe);
 	return 0;
@@ -39,7 +220,7 @@ int main(int argc, char* argv[]) {
 	for (int i = 0; i < tuples->size(); ++i) {
 		char* tuple = tuples->at(i);
 		int factor1 = 0, factor2 = 0;
-		factorize(tuple, factor1, factor2, polarity);
+		factorize(tuple, i + 1, factor1, factor2, polarity);
 		factor_lt += boost::lexical_cast<std::string>((polarity==0)? factor1:factor2);
 		factor_gt += boost::lexical_cast<std::string>((polarity==0)? factor2:factor1);
 		polarity = 1 - polarity;
