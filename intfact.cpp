@@ -20,7 +20,12 @@ void* characterize(char* num, vector<char*>& tuples) {
 	return 0;
 }
 
-void* factorize(void* arg) {
+void* factorize(char* tuple, int& factor1, int& factor2, int& polarity) {
+	FILE* fp = fopen64("./pi.txt","r");
+	FILE* fe = fopen64("./e.txt","r");
+	fclose(fp);
+	fclose(fe);
+	return 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -28,6 +33,17 @@ int main(int argc, char* argv[]) {
 	printf("\nNumber entered was %s\n", num);
 	vector<char*>* tuples = (vector<char*>*) calloc(1, sizeof(vector<char*>));
 	characterize(num, *tuples);
+	std::string factor_lt = "";
+	std::string factor_gt = "";
+	int polarity = -1;
+	for (int i = 0; i < tuples->size(); ++i) {
+		char* tuple = tuples->at(i);
+		int factor1 = 0, factor2 = 0;
+		factorize(tuple, factor1, factor2, polarity);
+		factor_lt += boost::lexical_cast<std::string>((polarity==0)? factor1:factor2);
+		factor_gt += boost::lexical_cast<std::string>((polarity==0)? factor2:factor1);
+		polarity = 1 - polarity;
+	}
 	for (int i = 0; i < tuples->size(); ++i) {
 		free(tuples->at(i));
 	}
