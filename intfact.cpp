@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 		int u = 0, w = 0;
 		int polarity1 = 0, polarity2 = 0;
 		long pos = factorize(tuple, i + 1, l);
-		cout << "\t" << pos << endl;
+		cout << tuple << "\t" << pos << endl;
 	}
 	for (int i = 0; i < tuples->size(); ++i) {
 		free(tuples->at(i));
