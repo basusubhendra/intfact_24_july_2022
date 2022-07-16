@@ -17,8 +17,8 @@ void* factorize(void* arg) {
 	FILE* fe = fopen64("./e.txt", "r");
 	char posit1 = 0, posit2 = 0;
 	char pp = 0, ee = 0;
-	fscanf(f1, "%c", &posit1);
-	fscanf(f2, "%c", &posit2);
+	int ret1 = fscanf(f1, "%c", &posit1);
+	int ret2 = fscanf(f2, "%c", &posit2);
 	long numerator_sum = 0;
 	long denominator_sum = 0;
 	while (1) {
@@ -50,14 +50,28 @@ void* factorize(void* arg) {
 			factor += boost::lexical_cast<std::string>(abs(numerator_sum - denominator_sum));
 			numerator_sum = 0;
 			denominator_sum = 0;
-			fscanf(f1, "%c", &posit1);
-			fscanf(f2, "%c", &posit2);
+			ret1 = fscanf(f1, "%c", &posit1);
+			ret2 = fscanf(f2, "%c", &posit2);
+			if (ret1 == EOF) {
+				fseek(f1, 0, SEEK_SET);
+			}
+			if (ret2 == EOF) {
+				fseek(f2, 0, SEEK_SET);
+			}
 		} else if (pk_hit && ((t == 1 && pp == posit2) || (t == 0 && pp == posit1))) {
 			numerator_sum += pk;
 			fscanf(f1, "%c", &posit1);
+			ret1 = fscanf(f1, "%c", &posit1);
+			if (ret1 == EOF) {
+				fseek(f1, 0, SEEK_SET);
+			}
 		} else if (ek_hit && ((t == 1 && ee == posit2) || (t == 0 && ee == posit1))) {
 			denominator_sum += ek;
 			fscanf(f2, "%c", &posit2);
+			ret2 = fscanf(f2, "%c", &posit2);
+			if (ret2 == EOF) {
+				fseek(f2, 0, SEEK_SET);
+			}
 		}
 	}
 	fclose(f1);
