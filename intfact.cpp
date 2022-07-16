@@ -8,6 +8,8 @@
 using namespace std;
 using namespace boost;
 
+vector<char*>* heap1 = 0, *heap2 = 0;
+
 void* factorize(void* arg) {
 	int t = *(int*) arg;
 	std::string factor = "";
@@ -48,6 +50,11 @@ void* factorize(void* arg) {
 			cout << "denominator_sum\t" << denominator_sum << endl;
 			system("a=1; read a");
 			factor += boost::lexical_cast<std::string>(abs(numerator_sum - denominator_sum));
+			if (t == 0) {
+				heap1->push_back(strdup((char*) factor.c_str()));
+			} else if (t == 1) {
+				heap2->push_back(strdup((char*) factor.c_str()));
+			}
 			numerator_sum = 0;
 			denominator_sum = 0;
 			ret1 = fscanf(f1, "%c", &posit1);
@@ -84,6 +91,8 @@ void* factorize(void* arg) {
 int main() {
 	char* ret1, *ret2;
 	int t = 0;
+	heap1 = (vector<char*>*) calloc(1, sizeof(vector<char*>));
+        heap2 = (vector<char*>*) calloc(1, sizeof(vector<char*>));
 	pthread_t thread_id1, thread_id2;
 	pthread_create(&thread_id1, NULL, factorize, &t);
 	t = 1 - t;
