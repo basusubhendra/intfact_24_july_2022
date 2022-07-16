@@ -27,7 +27,7 @@ void* factorize(void* arg) {
 		if ((t == 1 && pp == posit2 && ee == posit1) || (t == 0 && pp == posit1 && ee == posit2)) {
 			cout << "numerator_sum\t" << numerator_sum << endl;
 			cout << "denominator_sum\t" << denominator_sum << endl;
-			factor += boost::lexical_cast<std::string>(numerator_sum - denominator_sum);
+			factor += boost::lexical_cast<std::string>(abs(numerator_sum - denominator_sum));
 			numerator_sum = 0;
 			denominator_sum = 0;
 			fscanf(f1, "%c", &posit1);
