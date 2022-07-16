@@ -41,7 +41,17 @@ long factorize(char* tuple, int stage, long l) {
 	return pos;
 }
 
+long reverse(long p) {
+	long rev = 0;
+	while (p > 0) {
+		rev = (rev*10) + (p % 10);
+		p /= 10;
+	}
+	return rev;
+}
+
 int main(int argc, char* argv[]) {
+	FILE* characterization_output = fopen64("./op.txt", "w");
 	char* num = strdup(argv[1]);
 	printf("\nNumber entered was %s\n", num);
 	vector<char*>* tuples = (vector<char*>*) calloc(1, sizeof(vector<char*>));
@@ -50,13 +60,24 @@ int main(int argc, char* argv[]) {
 	std::string factor_lt = "";
 	std::string factor_gt = "";
 	int polarity1 = -1, polarity2 = -1;
-	for (int i = 0; i < tuples->size(); ++i) {
+	long sz = tuples->size();
+	vector<long> posits;
+	for (int i = 0; i < sz; ++i) {
 		char* tuple = tuples->at(i);
 		int u = 0, w = 0;
 		int polarity1 = 0, polarity2 = 0;
 		long pos = factorize(tuple, i + 1, l);
-		cout << tuple << "\t" << pos << endl;
+		fprintf(characterization_output, "%ld", pos + 1);
+		posits.push_back(pos + 1);
+		cout << tuple << "\t" << pos + 1 << endl;
 	}
+	fclose(characterization_output);
+	FILE* characterization_output2 = fopen64("./op2.txt", "w");
+	for (int i = sz - 1; i >= 0; --i) {
+		long posit = reverse(posits[i]);
+		fprintf(characterization_output2, "%ld", posit);
+	}
+	fclose(characterization_output2);
 	for (int i = 0; i < tuples->size(); ++i) {
 		free(tuples->at(i));
 	}
