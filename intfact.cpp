@@ -55,6 +55,8 @@ void* factorize(void* arg) {
 			} else if (t == 1) {
 				heap2->push_back(strdup((char*) factor.c_str()));
 			}
+			//Check for terminating condition comes here
+			//TBD
 			numerator_sum = 0;
 			denominator_sum = 0;
 			ret1 = fscanf(f1, "%c", &posit1);
