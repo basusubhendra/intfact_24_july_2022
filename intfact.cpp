@@ -53,10 +53,10 @@ void* factorize(void* arg) {
 			fscanf(f1, "%c", &posit1);
 			fscanf(f2, "%c", &posit2);
 		} else if (pk_hit && ((t == 1 && pp == posit2) || (t == 0 && pp == posit1))) {
-			numerator_sum += (pp - '0');
+			numerator_sum += pk;
 			fscanf(f1, "%c", &posit1);
 		} else if (ek_hit && ((t == 1 && ee == posit2) || (t == 0 && ee == posit1))) {
-			denominator_sum += (ee - '0');
+			denominator_sum += ek;
 			fscanf(f2, "%c", &posit2);
 		}
 	}
