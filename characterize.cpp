@@ -22,13 +22,13 @@ void* characterize(char* num, vector<char*>& tuples) {
 	return 0;
 }
 
-long factorize(char* tuple, int stage, long l) {
+long factorize(char* tuple, int stage, long l, long param) {
 	FILE* fp = fopen64("./pi.txt","r");
 	FILE* fe = fopen64("./e.txt","r");
 	long hit = 0;
 	long pos = 0;
 	char pp = 0, ee = 0;
-	while (hit < (int(ceil(l/3)*64) - 1)) {
+	while (hit < (int(ceil(l/3)*param) - 1)) {
 		fscanf(fp, "%c", &pp);
 		fscanf(fe, "%c", &ee);
 		if (pp == tuple[0] && ee == tuple[1]) {
@@ -53,6 +53,7 @@ long reverse(long p) {
 int main(int argc, char* argv[]) {
 	FILE* characterization_output = fopen64("./op.txt", "w");
 	char* num = strdup(argv[1]);
+	long param = atoi(argv[2]);
 	printf("\nNumber entered was %s\n", num);
 	vector<char*>* tuples = (vector<char*>*) calloc(1, sizeof(vector<char*>));
 	characterize(num, *tuples);
@@ -66,7 +67,7 @@ int main(int argc, char* argv[]) {
 		char* tuple = tuples->at(i);
 		int u = 0, w = 0;
 		int polarity1 = 0, polarity2 = 0;
-		long pos = factorize(tuple, i + 1, l);
+		long pos = factorize(tuple, i + 1, l, param);
 		fprintf(characterization_output, "%ld", pos + 1);
 		posits.push_back(pos + 1);
 		cout << tuple << "\t" << pos + 1 << endl;

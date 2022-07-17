@@ -51,12 +51,7 @@ void* factorize(void* arg) {
 		}
 		if (pk_hit && ek_hit && ((t == 1 && pp == posit2 && ee == posit1) || (t == 0 && pp == posit1 && ee == posit2))) {
 			cout << pp << "\t" << ee << endl;
-			system("a=1; read a");
-			if (t == 0) {
-				heap1->push_back(strdup((char*) factor.c_str()));
-			} else if (t == 1) {
-				heap2->push_back(strdup((char*) factor.c_str()));
-			}
+			return 0;
 			//Check for terminating condition comes here
 			//TBD
 			ret1 = fscanf(f1, "%c", &posit1);
@@ -105,19 +100,18 @@ void* factorize(void* arg) {
 	fclose(f2);
 	fclose(fp);
 	fclose(fe);
-	return strdup((char*) factor.c_str());
+	return 0;
 }
 
 int main() {
-	char* ret1, *ret2;
 	int t = 0;
 	heap1 = (vector<char*>*) calloc(1, sizeof(vector<char*>));
         heap2 = (vector<char*>*) calloc(1, sizeof(vector<char*>));
 	pthread_t thread_id1, thread_id2;
 	pthread_create(&thread_id1, NULL, factorize, &t);
-	//int t2 = 1 - t;
-	//pthread_create(&thread_id2, NULL, factorize, &t2);
-	pthread_join(thread_id1, (void**) &ret1);
-	//pthread_join(thread_id2, (void**) &ret2);
+	int t2 = 1 - t;
+	pthread_create(&thread_id2, NULL, factorize, &t2);
+	pthread_join(thread_id1, NULL);
+	pthread_join(thread_id2, NULL);
 	return 0;
 }
