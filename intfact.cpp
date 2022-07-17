@@ -27,23 +27,27 @@ void* factorize(void* arg) {
 		bool pk_hit = false, ek_hit = false;
 		fscanf(fp, "%c", &pp);
 		fscanf(fe, "%c", &ee);
+#ifdef _DEBUG
+		cout << pp << "\t" << ee << "\n" << posit1 << "\t" << posit2 << endl;
+		system("a=1;read a");
+#endif
 		int pk = pp - '0';
 		int ek = ee - '0';
-		bool is_pk_even = (pk % 2 == 0);
-		bool is_pk_odd = (pk % 2 == 1);
-		bool is_ek_even = (ek % 2 == 0);
-		bool is_ek_odd = (ek % 2 == 1);
-		if (t == 0 && is_pk_odd) {
+		bool is_pk_even = (pk != 0 && pk % 2 == 0);
+		bool is_pk_odd = (pk != 0 && pk % 2 == 1);
+		bool is_ek_even = (ek != 0 && ek % 2 == 0);
+		bool is_ek_odd = (ek != 0 && ek % 2 == 1);
+		if (t == 0 && is_ek_odd) {
 			pk_hit = true;
 		}
-		if (t == 0 && is_ek_even) {
+		if (t == 0 && is_pk_even) {
 			ek_hit = true;
-		}
-		if (t == 1 && is_pk_even) {
-			pk_hit = true;
 		}
 		if (t == 1 && is_pk_odd) {
 			ek_hit = true;
+		}
+		if (t == 1 && is_ek_even) {
+			pk_hit = true;
 		}
 		if (pk_hit && ek_hit && ((t == 1 && pp == posit2 && ee == posit1) || (t == 0 && pp == posit1 && ee == posit2))) {
 			cout << "numerator_sum\t" << numerator_sum << endl;
@@ -68,14 +72,34 @@ void* factorize(void* arg) {
 				fseek(f2, 0, SEEK_SET);
 			}
 		} else if (pk_hit && ((t == 1 && pp == posit2) || (t == 0 && pp == posit1))) {
+#ifdef _DEBUG
+			cout << "\npk_hit\n";
+#endif
 			numerator_sum += pk;
-			ret1 = fscanf(f1, "%c", &posit1);
+			if (t == 1) {
+				ret2 = fscanf(f2, "%c", &posit2);
+			} else if (t == 0) {
+				ret1 = fscanf(f1, "%c", &posit1);
+			}
 			if (ret1 == EOF) {
 				fseek(f1, 0, SEEK_SET);
 			}
-		} else if (ek_hit && ((t == 1 && ee == posit2) || (t == 0 && ee == posit1))) {
+			if (ret2 == EOF) {
+				fseek(f2, 0, SEEK_SET);
+			}
+		} else if (ek_hit && ((t == 0 && ee == posit2) || (t == 1 && ee == posit1))) {
+#ifdef _DEBUG
+			cout << "\nek_hit\n";
+#endif
 			denominator_sum += ek;
-			ret2 = fscanf(f2, "%c", &posit2);
+			if (t == 0) {
+				ret2 = fscanf(f2, "%c", &posit2);
+			} else if (t == 1) {
+				ret1 = fscanf(f1, "%c", &posit1);
+			}
+			if (ret1 == EOF) {
+				fseek(f1, 0, SEEK_SET);
+			}
 			if (ret2 == EOF) {
 				fseek(f2, 0, SEEK_SET);
 			}
