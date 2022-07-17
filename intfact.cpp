@@ -97,8 +97,8 @@ int main() {
         heap2 = (vector<char*>*) calloc(1, sizeof(vector<char*>));
 	pthread_t thread_id1, thread_id2;
 	pthread_create(&thread_id1, NULL, factorize, &t);
-	t = 1 - t;
-	pthread_create(&thread_id2, NULL, factorize, &t);
+	int t2 = 1 - t;
+	pthread_create(&thread_id2, NULL, factorize, &t2);
 	pthread_join(thread_id1, (void**) &ret1);
 	pthread_join(thread_id2, (void**) &ret2);
 	return 0;
