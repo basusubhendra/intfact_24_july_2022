@@ -50,10 +50,8 @@ void* factorize(void* arg) {
 			pk_hit = true;
 		}
 		if (pk_hit && ek_hit && ((t == 1 && pp == posit2 && ee == posit1) || (t == 0 && pp == posit1 && ee == posit2))) {
-			cout << "numerator_sum\t" << numerator_sum << endl;
-			cout << "denominator_sum\t" << denominator_sum << endl;
+			cout << pp << "\t" << ee << endl;
 			system("a=1; read a");
-			factor += boost::lexical_cast<std::string>(abs(numerator_sum - denominator_sum));
 			if (t == 0) {
 				heap1->push_back(strdup((char*) factor.c_str()));
 			} else if (t == 1) {
@@ -61,8 +59,6 @@ void* factorize(void* arg) {
 			}
 			//Check for terminating condition comes here
 			//TBD
-			numerator_sum = 0;
-			denominator_sum = 0;
 			ret1 = fscanf(f1, "%c", &posit1);
 			ret2 = fscanf(f2, "%c", &posit2);
 			if (ret1 == EOF) {
@@ -75,7 +71,7 @@ void* factorize(void* arg) {
 #ifdef _DEBUG
 			cout << "\npk_hit\n";
 #endif
-			numerator_sum += pk;
+			//numerator_sum += pk;
 			if (t == 1) {
 				ret2 = fscanf(f2, "%c", &posit2);
 			} else if (t == 0) {
@@ -91,7 +87,7 @@ void* factorize(void* arg) {
 #ifdef _DEBUG
 			cout << "\nek_hit\n";
 #endif
-			denominator_sum += ek;
+			//denominator_sum += ek;
 			if (t == 0) {
 				ret2 = fscanf(f2, "%c", &posit2);
 			} else if (t == 1) {
