@@ -1,2 +1,2 @@
-g++ -g -o ./characterize ./characterize.cpp `getconf LFS_CFLAGS`
-g++ -g -o ./factorize ./intfact.cpp `getconf LFS_CFLAGS` -lpthread
+g++ -o ./characterize ./characterize.cpp `getconf LFS_CFLAGS`
+g++ -o ./pre_factorize ./pre_factorize.cpp `getconf LFS_CFLAGS` -lpthread
