@@ -5,6 +5,10 @@
 #include <string>
 #include <iostream>
 #include <boost/lexical_cast.hpp>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+
 using namespace std;
 using namespace boost;
 
@@ -50,10 +54,9 @@ void* factorize(void* arg) {
 			pk_hit = true;
 		}
 		if (pk_hit && ek_hit && ((t == 1 && pp == posit2 && ee == posit1) || (t == 0 && pp == posit1 && ee == posit2))) {
-			cout << pp << "\t" << ee << endl;
+		        pid_t x = syscall(__NR_gettid);
+			cout << endl << x << "\t" << pp << "\t" << ee << endl;
 			return 0;
-			//Check for terminating condition comes here
-			//TBD
 			ret1 = fscanf(f1, "%c", &posit1);
 			ret2 = fscanf(f2, "%c", &posit2);
 			if (ret1 == EOF) {

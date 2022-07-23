@@ -1,4 +1,4 @@
 #!/usr/bin/tcsh
-./makecmd
+#./makecmd
 ./characterize $argv[1] $argv[2]
-./factorize
+./pre_factorize
