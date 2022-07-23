@@ -124,9 +124,9 @@ int main(int argc, char* argv[]) {
 		char* ee = (char*) calloc(nlength + 1, sizeof(char));
 		strncpy(pp, pi, nlength);
 		strncpy(ee, e, nlength);
-		strrev(ee);
 		pp[nlength] = '\0';
 		ee[nlength] = '\0';
+		strrev(ee);
 		for (int i = 0; i < nlength; ++i) {
 			char nn = num[i % l];
 			char _pp = pp[i];
