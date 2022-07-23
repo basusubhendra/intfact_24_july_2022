@@ -6,6 +6,7 @@
 #include <iostream>
 #include <gmp.h>
 #include <boost/lexical_cast.hpp>
+#include <algorithm>
 #include "pi.hpp"
 #include "e.hpp"
 using namespace boost;
@@ -96,7 +97,11 @@ long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	long sz = int_params.size();
 	long residual_size = sz - res;
 	long res1 = _calculate(int_params, sz, posits);
-	long res2 = _calculate(int_params, res, posits);
+	vector<int> _int_params;
+	vector<long> _posits;
+	std::copy(int_params.begin() + sz, int_params.end(), back_inserter(_int_params));
+	std::copy(posits.begin() + sz, posits.end(), back_inserter(_posits));
+	long res2 = _calculate(_int_params, residual_size, _posits);
 	return res1 - res2;
 }
 
