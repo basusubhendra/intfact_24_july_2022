@@ -99,8 +99,8 @@ long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	long res1 = _calculate(int_params, sz, posits);
 	vector<int> _int_params;
 	vector<long> _posits;
-	std::copy(int_params.begin() + sz, int_params.end(), back_inserter(_int_params));
-	std::copy(posits.begin() + sz, posits.end(), back_inserter(_posits));
+	std::copy(int_params.begin() + res, int_params.end(), back_inserter(_int_params));
+	std::copy(posits.begin() + res, posits.end(), back_inserter(_posits));
 	long res2 = _calculate(_int_params, residual_size, _posits);
 	return res1 - res2;
 }
