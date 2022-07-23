@@ -6,6 +6,8 @@
 #include <iostream>
 #include <gmp.h>
 #include <boost/lexical_cast.hpp>
+#include "pi.hpp"
+#include "e.hpp"
 using namespace boost;
 using namespace std;
 
@@ -95,6 +97,8 @@ int main(int argc, char* argv[]) {
 	int ctr = 0;
 	vector<int> int_params;
 	vector<long> posits;
+	bool found = false;
+	long params = 0;
 	while (1) {
 		int hit = 0, t = 0;
 		long nlength = j*l;
@@ -114,7 +118,7 @@ int main(int argc, char* argv[]) {
 			_payload[1] = _ee;
 			_payload[2] = '\0';
 			char _nn[3];
-			_nn[0] = nn[0];
+			_nn[0] = nn;
 			_nn[2] = '\0';
 			for (char k = '0'; k < '9'; ++k) {
 				_nn[1] = k;
@@ -126,7 +130,7 @@ int main(int argc, char* argv[]) {
 					if (_payload_k_rem == 0) {
 						int_params.push_back(k - '0');
 						posits.push_back(ctr);
-						params += _payload_k / nk;
+						params += (_payload_k / nk);
 						++hit;
 						if (hit % 5 == 0) {
 							if (params % 10 == 0) {
@@ -138,9 +142,15 @@ int main(int argc, char* argv[]) {
 								}
 								t = 1 - t;
 							}
+							found = true;
+							break;
 						}	
 					}
 				}
+			}
+			if (found) {
+				found = false;
+				break;
 			}
 		}
 		--j;
