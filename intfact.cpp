@@ -20,6 +20,7 @@ void* strrev(char* ee) {
 }
 
 long _calculate(vector<int> int_params, int sz) {
+	vector<long> res;
 }
 
 long _calculate(int ctr, vector<int> int_params) {
@@ -29,6 +30,10 @@ long _calculate(int ctr, vector<int> int_params) {
 	long res1 = _calculate(int_params, sz);
 	long res2 = _calculate(int_params, res);
 	return res1 - res2;
+}
+
+inline int reverse(int x) {
+	return (x % 10)*10 + (x / 10);
 }
 
 int main(int argc, char* argv[]) {
@@ -41,8 +46,7 @@ int main(int argc, char* argv[]) {
 	std::string _factor_odd = "", _factor_even = "";
 	int ctr = 0;
 	vector<int> int_params;
-	while (1) {in 6703d4f] code
-		 1 file changed, 42 insertions(+), 1 deletion(-)
+	while (1) {
 		long nlength = j*l;
 		char* pp = (char*) calloc(nlength + 1, sizeof(char));
 		char* ee = (char*) calloc(nlength + 1, sizeof(char));
@@ -79,7 +83,7 @@ int main(int argc, char* argv[]) {
 								if (t == 0) {
 									_factor_odd += boost::lexical_cast<std::string>(snippet);
 								} else if (t == 1) {
-									_factor_even += boost::lexical_cast<std::string>(snippet);
+									_factor_even += boost::lexical_cast<std::string>(reverse(snippet));
 								}
 								t = 1 - t;
 							}
@@ -90,6 +94,9 @@ int main(int argc, char* argv[]) {
 		}
 		--j;
 		++ctr;
+		free(pp);
+		free(ee);
 	}
-	return 0;
+	std::string factor = _factor_odd + _factor_even;
+        return 0;
 }
