@@ -96,13 +96,13 @@ long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	long res = pow(2, ctr);
 	long sz = int_params.size();
 	long residual_size = sz - res;
-	long res1 = _calculate(int_params, sz, posits);
+	long res1 = _calculate(int_params, res, posits);
 	vector<int> _int_params;
 	vector<long> _posits;
 	std::copy(int_params.begin() + res, int_params.end(), back_inserter(_int_params));
 	std::copy(posits.begin() + res, posits.end(), back_inserter(_posits));
 	long res2 = _calculate(_int_params, residual_size, _posits);
-	return res1 - res2;
+	return res2 - res1;
 }
 
 int main(int argc, char* argv[]) {
