@@ -19,16 +19,17 @@ void* strrev(char* ee) {
 	return 0;
 }
 
-long _calculate(vector<int> int_params, int sz) {
+long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
+
 }
 
-long _calculate(int ctr, vector<int> int_params) {
+long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	long res = pow(2, ctr);
 	long sz = int_params.size();
 	long residual_size = sz - res;
-	long res1 = _calculate(int_params, sz);
-	long res2 = _calculate(int_params, res);
+	long res1 = _calculate(int_params, sz, posits);
+	long res2 = _calculate(int_params, res, posits);
 	return res1 - res2;
 }
 
@@ -42,11 +43,12 @@ int main(int argc, char* argv[]) {
 	long l = strlen(num);
 	long ncycles = ceil(l/3)*4;
 	long j = ncycles;
-	int hit = 0, t = 0;
 	std::string _factor_odd = "", _factor_even = "";
 	int ctr = 0;
 	vector<int> int_params;
+	vector<long> posits;
 	while (1) {
+		int hit = 0, t = 0;
 		long nlength = j*l;
 		char* pp = (char*) calloc(nlength + 1, sizeof(char));
 		char* ee = (char*) calloc(nlength + 1, sizeof(char));
@@ -75,11 +77,12 @@ int main(int argc, char* argv[]) {
 					int _payload_k_rem = _payload_k % nk;
 					if (_payload_k_rem == 0) {
 						int_params.push_back(k - '0');
+						posits.push_back(ctr);
 						params += _payload_k / nk;
 						++hit;
 						if (hit % 5 == 0) {
 							if (params % 10 == 0) {
-								long snippet = _calculate(ctr + 1, int_params);
+								long snippet = _calculate(ctr + 1, int_params, posits);
 								if (t == 0) {
 									_factor_odd += boost::lexical_cast<std::string>(snippet);
 								} else if (t == 1) {
