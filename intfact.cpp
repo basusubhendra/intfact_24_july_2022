@@ -16,10 +16,14 @@ char* quotient(char* num, char* factor) {
 	mpz_t fz;
 	mpz_init(fz);
 	mpz_set_str(fz, factor, 10);
-	mpz_t quot;
-	mpz_init(quot);
-	mpz_mod(quot, nz, fz);
-	return strdup(mpz_get_str(0, 10, qz));
+	mpz_t qz;
+	mpz_init(qz);
+	mpz_mod(qz, nz, fz);
+	mpz_clear(nz);
+	mpz_clear(fz);
+	char* quot = strdup(mpz_get_str(0, 10, qz));
+	mpz_clear(qz);
+	return quot;
 }
 
 void* strrev(char* ee) {
