@@ -12,7 +12,7 @@
 using namespace boost;
 using namespace std;
 
-char* quotient(char* num, char* factor) {
+char* quotient(char* num, char* factor, bool& succ) {
 	mpz_t nz;
 	mpz_init(nz);
 	mpz_set_str(nz, num, 10);
@@ -28,7 +28,7 @@ char* quotient(char* num, char* factor) {
 	mpz_t rz;
 	mpz_init(rz);
 	mpz_mod(rz, nz, fz);
-	bool succ = (mpz_cmp_si(rz, 0) == 0);
+	succ = (mpz_cmp_si(rz, 0) == 0);
 	mpz_clear(nz);
 	mpz_clear(fz);
 	mpz_clear(rz);
@@ -144,27 +144,23 @@ int main(int argc, char* argv[]) {
 				if (nk == 0) nk = 100;
 				int _payload_k = atoi(_payload);
 				if (_payload_k == 0) _payload_k = 100;
-				if (nk > 0) {
-					int _payload_k_rem = _payload_k % nk;
-					if (_payload_k_rem == 0) {
-						int_params.push_back(k - '0');
-						posits.push_back(ctr);
-						params += (_payload_k / nk);
-						++hit;
-						if (hit % 5 == 0) {
-							if (params % 10 == 0) {
-								long snippet = _calculate(ctr + 1, int_params, posits);
-								if (t == 0) {
-									_factor_odd += boost::lexical_cast<std::string>(snippet);
-								} else if (t == 1) {
-									_factor_even += boost::lexical_cast<std::string>(reverse(snippet));
-								}
-								t = 1 - t;
-							}
-							found = true;
-							break;
-						}	
-					}
+				int _payload_k_rem = _payload_k % nk;
+				if (_payload_k_rem == 0) {
+					int_params.push_back(k - '0');
+					posits.push_back(ctr);
+					params += (_payload_k / nk);
+					++hit;
+					if (hit % 5 == 0 && params % 10 == 0) {
+						long snippet = _calculate(ctr + 1, int_params, posits);
+						if (t == 0) {
+							_factor_odd += boost::lexical_cast<std::string>(snippet);
+						} else if (t == 1) {
+							_factor_even += boost::lexical_cast<std::string>(reverse(snippet));
+						}
+						t = 1 - t;
+						found = true;
+						break;
+					}	
 				}
 			}
 			if (found) {
@@ -176,9 +172,13 @@ int main(int argc, char* argv[]) {
 		++ctr;
 		free(pp);
 		free(ee);
+		std::string factor = _factor_odd + _factor_even;
+		bool succ = false;
+		char* other_factor = quotient(num, strdup((char*) factor.c_str()), succ);
+		if (succ) {
+			cout << endl << num << "\t=\t" << factor << "\tX\t" << other_factor << endl;
+			break;
+		}
 	}
-	std::string factor = _factor_odd + _factor_even;
-	char* other_factor = quotient(num, strdup((char*) factor.c_str()));
-	cout << endl << num << "\t=\t" << factor << "\tX\t" << other_factor << endl;
         return 0;
 }
