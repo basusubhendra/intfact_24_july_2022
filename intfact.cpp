@@ -8,22 +8,6 @@
 #include <boost/lexical_cast.hpp>
 using namespace boost;
 using namespace std;
-#define NZEROS 100000
-
-int binarySearch(int arr, int x, int low, int high)
-	if (low > high) {
-		return -1;
-	} else {
-		mid = (low + high) / 2; 
-		if (x == arr[mid]) {
-			return mid;
-		} else if (x > arr[mid]) {
-			return binarySearch(arr, x, mid + 1, high);
-		} else {
-			return binarySearch(arr, x, low, mid - 1) 
-		}
-	}
-}
 
 void* strrev(char* ee) {
 	long l = strlen(ee);
@@ -45,7 +29,8 @@ int main(int argc, char* argv[]) {
 	std::string _factor_odd = "", _factor_even = "";
 	int ctr = 0;
 	vector<int> int_params;
-	while (1) {
+	while (1) {in 6703d4f] code
+		 1 file changed, 42 insertions(+), 1 deletion(-)
 		long nlength = j*l;
 		char* pp = (char*) calloc(nlength + 1, sizeof(char));
 		char* ee = (char*) calloc(nlength + 1, sizeof(char));
@@ -77,7 +62,7 @@ int main(int argc, char* argv[]) {
 						params += _payload_k / nk;
 						++hit;
 						if (hit % 5 == 0) {
-							if (params % 10 == 0 || binarySearch(zeros, params, 0, NZEROS) != -1) {
+							if (params % 10 == 0) {
 								long snippet = _calculate(ctr, int_params);
 								if (t == 0) {
 									_factor_odd += boost::lexical_cast<std::string>(snippet);
