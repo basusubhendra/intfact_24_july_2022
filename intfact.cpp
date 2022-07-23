@@ -19,6 +19,18 @@ void* strrev(char* ee) {
 	return 0;
 }
 
+long _calculate(vector<int> int_params, int sz) {
+}
+
+long _calculate(int ctr, vector<int> int_params) {
+	long res = pow(2, ctr);
+	long sz = int_params.size();
+	long residual_size = sz - res;
+	long res1 = _calculate(int_params, sz);
+	long res2 = _calculate(int_params, res);
+	return res1 - res2;
+}
+
 int main(int argc, char* argv[]) {
 	char* num = strdup(argv[1]);
 	printf("\nNumber Entered was:%s\n", num);
@@ -63,7 +75,7 @@ int main(int argc, char* argv[]) {
 						++hit;
 						if (hit % 5 == 0) {
 							if (params % 10 == 0) {
-								long snippet = _calculate(ctr, int_params);
+								long snippet = _calculate(ctr + 1, int_params);
 								if (t == 0) {
 									_factor_odd += boost::lexical_cast<std::string>(snippet);
 								} else if (t == 1) {
