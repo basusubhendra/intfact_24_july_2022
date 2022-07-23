@@ -109,8 +109,8 @@ int main(int argc, char* argv[]) {
 	char* num = strdup(argv[1]);
 	printf("\nNumber Entered was:%s\n", num);
 	long l = strlen(num);
-	long ncycles = ceil(l/3)*4;
-	long j = ncycles;
+	long ntriplets = ceil(l/3);
+	long j = ntriplets;
 	std::string _factor_odd = "", _factor_even = "";
 	int ctr = 0;
 	vector<int> int_params;
@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
 	long params = 0;
 	while (1) {
 		int hit = 0, t = 0;
-		long nlength = j*l;
+		long nlength = j*4*l;
 		char* pp = (char*) calloc(nlength + 1, sizeof(char));
 		char* ee = (char*) calloc(nlength + 1, sizeof(char));
 		strncpy(pp, pi, nlength);
