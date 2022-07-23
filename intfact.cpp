@@ -32,6 +32,15 @@ void* strrev(char* ee) {
 	return 0;
 }
 
+int reverse(int x) {
+	int rev = 0;
+	while (x > 0) {
+            rev = rev*10 + (x % 10);
+	    x /= 10;
+	}
+	return rev;
+}
+
 long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
 	long prev_posit = posits[0];
@@ -41,6 +50,7 @@ long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	long buffer = prev_int_param;
         for (int i = 1; i < posits.size(); ++i) {
 		if (hit == 1 && posits[i] == (posits[i - 1] + 1)) {
+			sum = reverse(sum);
 			buffer = int_params[i];
 			prev_int_param = int_params[i];
 			hit = 0;
@@ -60,9 +70,6 @@ long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 		}
 	}
 	return sum;
-
-
-
 }
 
 long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
@@ -72,10 +79,6 @@ long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	long res1 = _calculate(int_params, sz, posits);
 	long res2 = _calculate(int_params, res, posits);
 	return res1 - res2;
-}
-
-inline int reverse(int x) {
-	return (x % 10)*10 + (x / 10);
 }
 
 int main(int argc, char* argv[]) {
