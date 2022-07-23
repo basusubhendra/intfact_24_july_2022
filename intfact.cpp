@@ -18,14 +18,27 @@ char* quotient(char* num, char* factor) {
 	mpz_t fz;
 	mpz_init(fz);
 	mpz_set_str(fz, factor, 10);
+	if (mpz_cmp_si(fz, 0) == 0 || mpz_cmp_ui(fz, 1) == 0) {
+		return 0;
+	}
 	mpz_t qz;
 	mpz_init(qz);
-	mpz_mod(qz, nz, fz);
+	mpz_div(qz, nz, fz);
+	mpz_t rz;
+	mpz_init(rz);
+	mpz_mod(rz, nz, fz);
+	bool succ = (mpz_cmp_si(rz, 0) == 0);
 	mpz_clear(nz);
 	mpz_clear(fz);
-	char* quot = strdup(mpz_get_str(0, 10, qz));
-	mpz_clear(qz);
-	return quot;
+	mpz_clear(rz);
+	if (succ) {
+		char* quot = strdup(mpz_get_str(0, 10, qz));
+		mpz_clear(qz);
+		return quot;
+	} else {
+		mpz_clear(qz);
+		return 0;
+	}
 }
 
 void* strrev(char* ee) {
