@@ -9,6 +9,19 @@
 using namespace boost;
 using namespace std;
 
+char* quotient(char* num, char* factor) {
+	mpz_t nz;
+	mpz_init(nz);
+	mpz_set_str(nz, num, 10);
+	mpz_t fz;
+	mpz_init(fz);
+	mpz_set_str(fz, factor, 10);
+	mpz_t quot;
+	mpz_init(quot);
+	mpz_mod(quot, nz, fz);
+	return strdup(mpz_get_str(0, 10, qz));
+}
+
 void* strrev(char* ee) {
 	long l = strlen(ee);
 	for (int i = 0; i < int(l / 2); ++i) {
@@ -21,6 +34,34 @@ void* strrev(char* ee) {
 
 long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
+	long prev_posit = posits[0];
+	int prev_int_param = int_params[0];
+	long sum = 0;
+	int hit = 0;
+	long buffer = prev_int_param;
+        for (int i = 1; i < posits.size(); ++i) {
+		if (hit == 1 && posits[i] == (posits[i - 1] + 1)) {
+			buffer = int_params[i];
+			prev_int_param = int_params[i];
+			hit = 0;
+		} else if (hit == 0 && posits[i] == (posits[i - 1] + 1)) {
+                    sum += (prev_int_param*10 + int_params[i]);
+		    prev_int_param = int_params[i];
+                    ++hit;
+		    buffer = 0;
+		} else if (hit == 0) {
+			sum += buffer;
+			buffer = int_params[i];
+			prev_int_param = buffer;
+		} else if (hit == 1) {
+			sum += buffer;
+			buffer = int_params[i];
+			prev_int_param = buffer;
+		}
+	}
+	return sum;
+
+
 
 }
 
@@ -101,5 +142,7 @@ int main(int argc, char* argv[]) {
 		free(ee);
 	}
 	std::string factor = _factor_odd + _factor_even;
+	char* other_factor = quotient(num, strdup((char*) factor.c_str()));
+	cout << endl << num << "\t=\t" << factor << "\tX\t" << other_factor << endl;
         return 0;
 }
