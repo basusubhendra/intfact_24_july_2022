@@ -141,6 +141,7 @@ int main(int argc, char* argv[]) {
 			for (char k = '0'; k < '9'; ++k) {
 				_nn[1] = k;
 				int nk = atoi(_nn);
+				if (nk == 0) nk = 100;
 				int _payload_k = atoi(_payload);
 				if (_payload_k == 0) _payload_k = 100;
 				if (nk > 0) {
