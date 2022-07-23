@@ -23,6 +23,35 @@ int binarySearch(int arr, int x, int low, int high)
 	}
 }
 
-int main() {
+void* strrev(char* ee) {
+	long l = strlen(ee);
+	for (int i = 0; i < int(l / 2); ++i) {
+	        char t = ee[i];
+		ee[i] = ee[l - 1 - i];
+		ee[l - 1 - i] = t;
+	}
+	return 0;
+}
+
+int main(int argc, char* argv[]) {
+	char* num = strdup(argv[1]);
+	printf("\nNumber Entered was:%s\n", num);
+	long l = strlen(num);
+	long ncycles = ceil(l/3)*4;
+	long j = ncycles;
+	while (1) {
+		long nlength = j*l;
+		char* pp = (char*) calloc(nlength + 1, sizeof(char));
+		char* ee = (char*) calloc(nlength + 1, sizeof(char));
+		strncpy(pp, pi, nlength);
+		strncpy(ee, e, nlength);
+		strrev(ee);
+		pp[nlength] = '\0';
+		ee[nlength] = '\0';
+		for (int i = 0; i < nlength; ++i) {
+			char nn = num[i % l];
+		}
+		--j;
+	}
 	return 0;
 }
