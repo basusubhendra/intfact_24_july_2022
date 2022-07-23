@@ -61,6 +61,7 @@ int reverse(int x) {
 	return rev;
 }
 
+//To Be Reviewed
 long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
 	long prev_posit = posits[0];
