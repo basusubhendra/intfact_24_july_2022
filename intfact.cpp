@@ -59,5 +59,14 @@ int main(int argc, char* argv[]) {
 			--ctr;
 		}
 	}
+	std::string factor = "";
+	char* last_ptr = (char*) pi;
+	for (int i = 0; i < posits.size(); ++i) {
+		int pk = posits[i];
+		char pp[128];
+		sprintf(pp, "%d", pk);
+		char* ptr = strstr(last_ptr , pp);
+                last_ptr = ptr;
+	}
 	return 0;
 }
