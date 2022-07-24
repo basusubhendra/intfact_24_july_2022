@@ -87,6 +87,7 @@ int main(int argc, char* argv[]) {
 	vector<long> posits;
 	char pp = 0;
 	long pos = 0;
+	std::string factor = "";
 	while (ctr >= 0) {
 		char nn = num[ctr];
 		char _nn = num[pos % l];
@@ -109,13 +110,18 @@ int main(int argc, char* argv[]) {
 		char* ptr = strstr(last_ptr1, _dd);
 		last_ptr1 = ptr;
 	}
-	last_ptr1 += strlen(_dd);
-	long sz = last_ptr1 - pi + 1;
-	char* ee = (char*) calloc(sz + 1, sizeof(char));
-	ee[sz] = '\0';
-	strncpy(ee, e, sz);
+	long increment1 = last_ptr1 - pi + 1;
+	increment1 += strlen(_dd);
+	--increment1;
+	char* ee = (char*) calloc(increment1 + 1, sizeof(char));
+	ee[increment1] = '\0';
+	strncpy(ee, e, increment1);
 	strrev(ee);
-	std::string factor = "";
+	char* pp3 = (char*) calloc(increment1 + 1, sizeof(char));
+	pp3[increment1] = '\0';
+	strncpy(pp3, pi, increment1);
+	cout << pp3 << endl;
+	cout << ee << endl;
 	long i = 0;
 	long init_posit = posits[i];
 	char _pp[128];
@@ -133,7 +139,7 @@ int main(int argc, char* argv[]) {
 		init_posit = pk;
 		sprintf(_pp, "%ld", pk);
 		char* ptr = strstr(last_ptr , _pp);
-		increment = ptr - last_ptr + 1;
+		increment += ptr - last_ptr;
 		cout << ee[increment] << endl;
 		exit(3);
 		char* p = ptr;
