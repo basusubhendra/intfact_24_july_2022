@@ -7,7 +7,6 @@
 #include <gmp.h>
 #include <vector>
 #include "pi.hpp"
-#include "e.hpp"
 using namespace std;
 
 char* quotient(char* num, char* factor, bool& succ) {
@@ -46,7 +45,6 @@ int main(int argc, char* argv[]) {
 	long l = strlen(num);
 	long ctr = l - 1;
 	FILE* fp = fopen64("./pi.txt", "r");
-	FILE* fe = fopen64("./e.txt", "r");
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	vector<long> posits;
 	char pp = 0;
@@ -58,6 +56,10 @@ int main(int argc, char* argv[]) {
 			posits.push_back(hash_map[pp-'0']);
 			--ctr;
 		}
+	}
+	cout << endl;
+	for (int i = 0; i < posits.size(); ++i) {
+		cout << posits[i] << endl;
 	}
 	std::string factor = "";
 	char* last_ptr = (char*) pi;
