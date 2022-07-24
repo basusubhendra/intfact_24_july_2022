@@ -99,6 +99,11 @@ int main(int argc, char* argv[]) {
 	char* last_ptr = strstr((char*)pi ,_pp);
 	for (int i = 1; i < posits.size(); ++i) {
 		long pk = posits[i];
+		if (pk == init_posit) {
+			factor += boost::lexical_cast<std::string>(0);
+			init_posit = pk;
+			continue;
+		}
 		init_posit = pk;
 		sprintf(_pp, "%ld", pk);
 		char* ptr = strstr(last_ptr , _pp);
@@ -116,6 +121,8 @@ int main(int argc, char* argv[]) {
 			++cnt;
 			--p;
 		}	
+		cout << endl << cnt << endl;
+		system("a=1; read a");
 		factor += boost::lexical_cast<std::string>(cnt);
 		last_ptr = ptr;
 	}
