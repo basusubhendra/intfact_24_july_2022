@@ -41,6 +41,16 @@ char* quotient(char* num, char* factor, bool& succ) {
 	}
 }
 
+void* strrev(char* ss) {
+	long l = strlen(ss);
+	for (int i = 0; i < (l / 2); ++i) {
+		char t = ss[i];
+		ss[i] = ss[l - 1 - i];
+		ss[l - 1 - i] = t;
+	}
+	return 0;
+}
+
 int _length(long x) {
 	long cnt = 0;
 	while (x > 0) {
@@ -91,12 +101,25 @@ int main(int argc, char* argv[]) {
 		cout << posits[i] << "\t, ";
 	}
 	cout << endl;
+	char _dd[128];
+	char* last_ptr1 = (char*)pi;
+	for (int i = 0; i < posits.size(); ++i) {
+		sprintf(_dd, "%ld", posits[i]);
+		char* ptr = strstr(last_ptr1, _dd);
+		last_ptr1 = ptr;
+	}
+	last_ptr1 += strlen(_dd);
+	char* ee = (char*) calloc(last_ptr1 - pi + 2, sizeof(char));
+	ee[last_ptr1 - pi + 1] = '\0';
+	strrev(ee);
 	std::string factor = "";
 	long i = 0;
 	long init_posit = posits[i];
 	char _pp[128];
 	sprintf(_pp, "%ld", init_posit);
 	char* last_ptr = strstr((char*)pi ,_pp);
+	long increment = last_ptr - pi + 1;
+	cout << ee[increment] << endl;
 	for (int i = 1; i < posits.size(); ++i) {
 		long pk = posits[i];
 		if (pk == init_posit) {
@@ -107,6 +130,9 @@ int main(int argc, char* argv[]) {
 		init_posit = pk;
 		sprintf(_pp, "%ld", pk);
 		char* ptr = strstr(last_ptr , _pp);
+		increment = ptr - last_ptr + 1;
+		cout << ee[increment] << endl;
+		exit(3);
 		char* p = ptr;
 		--p;
 		long cnt = 0;
