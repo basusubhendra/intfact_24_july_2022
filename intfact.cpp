@@ -6,8 +6,10 @@
 #include <iostream>
 #include <gmp.h>
 #include <vector>
+#include <boost/lexical_cast.hpp>
 #include "pi.hpp"
 using namespace std;
+using namespace boost;
 
 char* quotient(char* num, char* factor, bool& succ) {
 	mpz_t nz;
@@ -37,6 +39,31 @@ char* quotient(char* num, char* factor, bool& succ) {
 		mpz_clear(qz);
 		return 0;
 	}
+}
+
+int _length(long x) {
+	long cnt = 0;
+	while (x > 0) {
+		x /= 10;
+		if (x > 0) {
+			++cnt;
+		}
+	}
+	return cnt;
+}
+
+bool _compare(char* p, long init_posit) {
+	char* s = p;
+	while (init_posit > 0) {
+		int sk = *s - '0';
+		if (sk == init_posit % 10) {
+			init_posit /= 10;
+			--s;
+		} else {
+			return false;
+		}
+	}
+	return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -72,9 +99,26 @@ int main(int argc, char* argv[]) {
 	char* last_ptr = strstr((char*)pi ,_pp);
 	for (int i = 1; i < posits.size(); ++i) {
 		long pk = posits[i];
+		init_posit = pk;
 		sprintf(_pp, "%ld", pk);
 		char* ptr = strstr(last_ptr , _pp);
+		char* p = ptr;
+		--p;
+		long cnt = 0;
+		while (1) {
+			if (_compare(p, init_posit) == true) {
+				cnt += _length(init_posit);
+				break;
+			}
+			++cnt;
+		}	
+		factor += boost::lexical_cast<std::string>(cnt);
 		last_ptr = ptr;
+	}
+	bool succ = false;
+	char* other_factor = quotient(num, strdup((char*) factor.c_str()), succ);
+	if (succ) {
+		cout << endl << num << "\t=\t" << factor << "\tX\t" << other_factor << endl;
 	}
 	return 0;
 }
