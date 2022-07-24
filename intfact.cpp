@@ -4,6 +4,7 @@
 #include <string>
 #include <gmp.h>
 #include <boost/lexical_cast.hpp>
+#include <iostream>
 using namespace std;
 using namespace boost;
 
@@ -46,19 +47,20 @@ long reverse(long x) {
 	return rev;
 }
 
-FILE* _locate(char* ss, FILE* loc) {
+long _locate(char* ss, long loc, FILE* _c_pi) {
 	char pp = 0;
 	char* _ss = ss;
+	fseek(_c_pi, loc, SEEK_SET);
 	while (1) {
 		while (1) {
-			fscanf(loc, "%c", &pp);
+			fscanf(_c_pi, "%c", &pp);
 			if (pp == *ss) {
 		                ++ss;
 				break;
 			}
 		}
 		while (*ss != '\0') {
-			fscanf(loc, "%c", &pp);
+			fscanf(_c_pi, "%c", &pp);
 			if (pp == *ss) {
 				++ss;
 			} else {
@@ -71,20 +73,31 @@ FILE* _locate(char* ss, FILE* loc) {
 			ss = _ss;
 		}
 	}
-	return loc;
+	return ftello(_c_pi);
 }
 
-long compute_distance(FILE* loc1, FILE* loc2) {
-	FILE* loc = loc1;
+long _compute_distance(long loc1, long loc2, FILE* _c_pi) {
+	fseek(_c_pi, loc1, SEEK_SET);
 	char pp = 0;
 	long distance = 0;
-	while (loc != loc2) {
-		fscanf(loc, "%c", &pp);
+	while (ftello(_c_pi) != loc2) {
+		fscanf(_c_pi, "%c", &pp);
 		if (pp == '0') {
 			distance = 0;
 		}
 		++distance;
 	}
+	fclose(_c_pi);
+	return distance;
+}
+
+long compute_distance(char* s_pos1, char* s_pos2, long& loc1, long& loc2) {
+	FILE* calculator_pi = fopen64("./_pi.txt","r");
+	fseek(calculator_pi, loc2, SEEK_SET);
+	loc1 = _locate(s_pos1, loc2, calculator_pi);
+	loc2 = _locate(s_pos2, loc1, calculator_pi);
+	long distance = _compute_distance(loc1, loc2, calculator_pi);
+	fclose(calculator_pi);
 	return distance;
 }
 
@@ -93,11 +106,10 @@ int main(int argc, char* argv[]) {
 	printf("\nNumber Entered was:%s\n", num);
 	long l = strlen(num);
 	FILE* comparator_pi = fopen64("./pi.txt","r");
-	FILE* calculator_pi = fopen64("./_pi.txt","r");
-	FILE* loc1 = calculator_pi, *loc2 = calculator_pi;
 	int ctr = l - 1;
 	int* hash_map = (int*) calloc(10, sizeof(int));
 	std::string factor = "";
+	long loc1 = 0, loc2 = 0;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
@@ -128,15 +140,10 @@ int main(int argc, char* argv[]) {
 		char s_pos2[128];
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
-		FILE* loc1 = _locate(s_pos1, loc2);
-		FILE* loc2 = _locate(s_pos2, loc1);
-		long distance = compute_distance(loc1, loc2);
+		long distance = compute_distance(s_pos1, s_pos2, loc1, loc2);
 		factor += boost::lexical_cast<std::string>(distance);
-		fclose(loc1);
-		fclose(loc2);
 	}
 	fclose(comparator_pi);
-	fclose(calculator_pi);
 	bool succ = false;
 	char* other_factor = quotient(num, strdup((char*) factor.c_str()), succ);
 	if (succ == true) {
