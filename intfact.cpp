@@ -48,6 +48,7 @@ long reverse(long x) {
 
 FILE* _locate(char* ss, FILE* loc) {
 	char pp = 0;
+	char* _ss = ss;
 	while (1) {
 		while (1) {
 			fscanf(loc, "%c", &pp);
@@ -64,6 +65,11 @@ FILE* _locate(char* ss, FILE* loc) {
 				break;
 			}
 		}
+		if (*ss == '\0') {
+			break;
+		} else {
+			ss = _ss;
+		}
 	}
 	return loc;
 }
@@ -76,7 +82,6 @@ long compute_distance(FILE* loc1, FILE* loc2) {
 		fscanf(loc, "%c", &pp);
 		if (pp == '0') {
 			distance = 0;
-			continue;
 		}
 		++distance;
 	}
