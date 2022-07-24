@@ -8,6 +8,7 @@
 #include <vector>
 #include <boost/lexical_cast.hpp>
 #include "pi.hpp"
+#include "e.hpp"
 using namespace std;
 using namespace boost;
 
@@ -109,8 +110,10 @@ int main(int argc, char* argv[]) {
 		last_ptr1 = ptr;
 	}
 	last_ptr1 += strlen(_dd);
-	char* ee = (char*) calloc(last_ptr1 - pi + 2, sizeof(char));
-	ee[last_ptr1 - pi + 1] = '\0';
+	long sz = last_ptr1 - pi + 1;
+	char* ee = (char*) calloc(sz + 1, sizeof(char));
+	ee[sz] = '\0';
+	strncpy(ee, e, sz);
 	strrev(ee);
 	std::string factor = "";
 	long i = 0;
