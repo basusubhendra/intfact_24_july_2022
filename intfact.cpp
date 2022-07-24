@@ -106,13 +106,14 @@ int main(int argc, char* argv[]) {
 	long l = strlen(num);
 	FILE* comparator_pi = fopen64("./pi.txt","r");
 	int ctr = l - 1;
-	int* hash_map = (int*) calloc(10, sizeof(int));
+	long* hash_map = (long*) calloc(10, sizeof(long));
 	std::string factor = "";
 	long loc1 = 0, loc2 = 0;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
 		long pos1 = -1, pos2 = -1;
+		cout << nn1 << "\t" << nn2 << endl;
 		while (1) {
 			char pp = 0;
 			while (1) {
@@ -139,7 +140,9 @@ int main(int argc, char* argv[]) {
 		char s_pos2[128];
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
+		cout << s_pos1 << "\t" << s_pos2 << endl;
 		long distance = compute_distance(s_pos1, s_pos2, loc1, loc2);
+		cout << endl << distance << endl;
 		factor += boost::lexical_cast<std::string>(distance);
 	}
 	fclose(comparator_pi);
