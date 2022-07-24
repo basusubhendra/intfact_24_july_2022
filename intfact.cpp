@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	char* num = strdup(argv[1]);
 	printf("\nNumber Entered was:%s\n", num);
 	long l = strlen(num);
-	long ntriplets = ceil(l/3);
+	long ntriplets = ceil(l/3.0);
 	long j = ntriplets;
 	std::string _factor_odd = "", _factor_even = "";
 	int ctr = 0;
