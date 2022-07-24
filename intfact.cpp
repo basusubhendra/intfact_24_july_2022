@@ -87,7 +87,6 @@ long _compute_distance(long loc1, long loc2, FILE* _c_pi) {
 		}
 		++distance;
 	}
-	fclose(_c_pi);
 	return distance;
 }
 
