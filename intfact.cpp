@@ -55,13 +55,12 @@ void* strrev(char* ee) {
 int reverse(int x) {
 	int rev = 0;
 	while (x > 0) {
-            rev = rev*10 + (x % 10);
-	    x /= 10;
+		rev = rev*10 + (x % 10);
+		x /= 10;
 	}
 	return rev;
 }
 
-//To Be Reviewed
 long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
 	long prev_posit = posits[0];
@@ -69,17 +68,17 @@ long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	long sum = 0;
 	int hit = 0;
 	long buffer = prev_int_param;
-        for (int i = 1; i < sz; ++i) {
+	for (int i = 1; i < sz; ++i) {
 		if (hit == 1 && (posits[i] == (posits[i - 1] + 1))) {
 			sum = reverse(sum);
 			buffer = int_params[i];
 			prev_int_param = int_params[i];
 			hit = 0;
 		} else if (hit == 0 && (posits[i] == (posits[i - 1] + 1))) {
-                    sum += (prev_int_param*10 + int_params[i]);
-		    prev_int_param = int_params[i];
-                    ++hit;
-		    buffer = 0;
+			sum += (prev_int_param*10 + int_params[i]);
+			prev_int_param = int_params[i];
+			++hit;
+			buffer = 0;
 		} else if (hit == 0) {
 			sum += buffer;
 			buffer = int_params[i];
@@ -91,14 +90,17 @@ long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 			hit = 0;
 		}
 	}
+	if (buffer > 0) sum += buffer;
 	return sum;
 }
 
-long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
+long _calculate(int ctr, long nhits, vector<int> int_params, vector<long> posits) {
 	long res = pow(2, ctr);
-	long sz = int_params.size();
+	long sz = nhits;
 	long residual_size = sz - res;
 	long res1 = _calculate(int_params, res, posits);
+	cout << endl << res << "\t" << res1 << endl;
+	system("a=1;read a");
 	vector<int> _int_params;
 	vector<long> _posits;
 	std::copy(int_params.begin() + res, int_params.end(), back_inserter(_int_params));
@@ -119,10 +121,10 @@ int main(int argc, char* argv[]) {
 	int ctr = 0;
 	vector<int> int_params;
 	vector<long> posits;
-	bool found = false;
 	long params = 0;
-	while (1) {
+	while (j > 0) {
 		int hit = 0, t = 0;
+		long _pos = -1, nhits = 0;
 		long nlength = j*4*l;
 		char* pp = (char*) calloc(nlength + 1, sizeof(char));
 		char* ee = (char*) calloc(nlength + 1, sizeof(char));
@@ -131,9 +133,10 @@ int main(int argc, char* argv[]) {
 		pp[nlength] = '\0';
 		ee[nlength] = '\0';
 		strrev(ee);
+#ifdef _DEBUG
 		cout << endl << pp << endl;
 		cout << endl << ee << endl;
-		system("a=1; read a");
+#endif
 		for (int i = 0; i < nlength; ++i) {
 			char nn = num[i % l];
 			char _pp = pp[i];
@@ -145,43 +148,40 @@ int main(int argc, char* argv[]) {
 			char _nn[3];
 			_nn[0] = nn;
 			_nn[2] = '\0';
-			for (char k = '0'; k < '9'; ++k) {
-				_nn[1] = k;
+			for (char k = 0; k < 9; ++k) {
+				_nn[1] = k + '0';
 				int nk = atoi(_nn);
 				if (nk == 0) nk = 100;
 				int _payload_k = atoi(_payload);
 				if (_payload_k == 0) _payload_k = 100;
 				int _payload_k_rem = _payload_k % nk;
 				if (_payload_k_rem == 0) {
-					int_params.push_back(k - '0');
+					int_params.push_back(k);
 					posits.push_back(i);
 					params += (_payload_k / nk);
 					++hit;
-#ifdef _DEBUG
-					cout << endl << hit << "\t" << params << endl;
-#endif
-					if (hit  % 5 == 0 && params % 10 == 0) {
-						long snippet = _calculate(ctr + 1, int_params, posits);
-						if (t == 0) {
-							_factor_odd += boost::lexical_cast<std::string>(snippet);
-						} else if (t == 1) {
-							_factor_even += boost::lexical_cast<std::string>(reverse(snippet));
+					if (hit % 5 == 0 && params % 10 == 0) {
+						if (_pos == -1) {
+							_pos = ctr + 1;
+							nhits = hit;
 						}
-						t = 1 - t;
-						found = true;
-						break;
 					}	
 				}
 			}
-			if (found) {
-				found = false;
-				break;
-			}
 		}
+		long snippet = _calculate(_pos, nhits, int_params, posits);
+		if (t == 0) {
+			_factor_odd += boost::lexical_cast<std::string>(snippet);
+		} else if (t == 1) {
+			_factor_even += boost::lexical_cast<std::string>(reverse(snippet));
+		}
+		t = 1 - t;
 		--j;
 		++ctr;
 		free(pp);
 		free(ee);
+		int_params.clear();
+		posits.clear();
 		std::string factor = _factor_odd + _factor_even;
 		bool succ = false;
 		char* other_factor = quotient(num, strdup((char*) factor.c_str()), succ);
@@ -190,5 +190,5 @@ int main(int argc, char* argv[]) {
 			break;
 		}
 	}
-        return 0;
+	return 0;
 }
