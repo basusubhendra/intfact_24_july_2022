@@ -64,19 +64,21 @@ int reverse(int x) {
 //To Be Reviewed
 long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
+	cout << endl << posits[0] << "\t" << posits[1] << endl;
 	long prev_posit = posits[0];
 	int prev_int_param = int_params[0];
 	long sum = 0;
 	int hit = 0;
 	long buffer = prev_int_param;
-        for (int i = 1; i < posits.size(); ++i) {
-		if (hit == 1 && posits[i] == (posits[i - 1] + 1)) {
+        for (int i = 1; i < sz; ++i) {
+		if (hit == 1 && (posits[i] == (posits[i - 1] + 1))) {
 			sum = reverse(sum);
 			buffer = int_params[i];
 			prev_int_param = int_params[i];
 			hit = 0;
-		} else if (hit == 0 && posits[i] == (posits[i - 1] + 1)) {
+		} else if (hit == 0 && (posits[i] == (posits[i - 1] + 1))) {
                     sum += (prev_int_param*10 + int_params[i]);
+		    cout << endl << sum << endl;
 		    prev_int_param = int_params[i];
                     ++hit;
 		    buffer = 0;
@@ -88,6 +90,7 @@ long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 			sum += buffer;
 			buffer = int_params[i];
 			prev_int_param = buffer;
+			hit = 0;
 		}
 	}
 	return sum;
@@ -103,6 +106,8 @@ long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	std::copy(int_params.begin() + res, int_params.end(), back_inserter(_int_params));
 	std::copy(posits.begin() + res, posits.end(), back_inserter(_posits));
 	long res2 = _calculate(_int_params, residual_size, _posits);
+	cout << endl << res2 << "\t" << res1 << endl;
+	exit(3);
 	return abs(res2 - res1) % 100;
 }
 
@@ -152,10 +157,12 @@ int main(int argc, char* argv[]) {
 				int _payload_k_rem = _payload_k % nk;
 				if (_payload_k_rem == 0) {
 					int_params.push_back(k - '0');
-					posits.push_back(ctr);
+					posits.push_back(i);
 					params += (_payload_k / nk);
 					++hit;
-					if (hit % 5 == 0 && params % 10 == 0) {
+					cout << endl << hit << "\t" << params << endl;
+					system("a=1;read a");
+					if (hit  % 5 == 0 && params % 10 == 0) {
 						long snippet = _calculate(ctr + 1, int_params, posits);
 						if (t == 0) {
 							_factor_odd += boost::lexical_cast<std::string>(snippet);
