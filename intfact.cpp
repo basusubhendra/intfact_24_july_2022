@@ -91,7 +91,7 @@ long _compute_distance(long loc1, long loc2, FILE* _c_pi) {
 }
 
 long compute_distance(char* s_pos1, char* s_pos2, long& loc1, long& loc2) {
-	FILE* calculator_pi = fopen64("./_pi.txt","r");
+	FILE* calculator_pi = fopen64("./e.txt","r");
 	fseek(calculator_pi, loc2, SEEK_SET);
 	loc1 = _locate(s_pos1, loc2, calculator_pi);
 	loc2 = _locate(s_pos2, loc1, calculator_pi);
@@ -109,6 +109,7 @@ int main(int argc, char* argv[]) {
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	std::string factor = "";
 	long loc1 = 0, loc2 = 0;
+	long pos = 0, last_pos = 0;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
@@ -118,31 +119,35 @@ int main(int argc, char* argv[]) {
 			char pp = 0;
 			while (1) {
 				fscanf(comparator_pi, "%c", &pp);
+				cout << pp << "\t\t" << num[pos % l] << "\t\t" << nn1 << "\t\t" << nn2 << endl;
+				system("a=1;read a");
 				hash_map[pp-'0']++;
-				if (pp == nn1) {
+				if ((pp == nn1) && (pp == num[pos % l])) {
 					pos1 = reverse(hash_map[pp-'0']);
-					break;
+					last_pos = pos;
+					cout << endl << "N1 set" << endl;
 				}
-			}
-			while (1) {
-				fscanf(comparator_pi, "%c", &pp);
-				hash_map[pp-'0']++;
-				if (pp == nn2) {
+				if ((pp == nn2) && (pp == num[pos % l]) && (pos > last_pos)) {
 					pos2 = reverse(hash_map[pp-'0']);
+					cout << endl << "N2 set" << endl;
+					++pos;
 					break;
 				}
+				++pos;
 			}
 			if (pos1 != pos2) {
 				break;
 			}
 		}
-		char s_pos1[128];
-		char s_pos2[128];
+		char* s_pos1 = (char*) calloc(128, sizeof(char));
+		char* s_pos2 = (char*) calloc(128, sizeof(char));
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
 		cout << s_pos1 << "\t" << s_pos2 << endl;
 		long distance = compute_distance(s_pos1, s_pos2, loc1, loc2);
 		cout << endl << distance << endl;
+		free(s_pos1);
+		free(s_pos2);
 		factor += boost::lexical_cast<std::string>(distance);
 	}
 	fclose(comparator_pi);
