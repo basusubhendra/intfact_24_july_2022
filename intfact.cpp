@@ -65,13 +65,16 @@ int main(int argc, char* argv[]) {
 	}
 	cout << endl;
 	std::string factor = "";
-	char* last_ptr = (char*) pi;
-	for (int i = 0; i < posits.size(); ++i) {
-		int pk = posits[i];
-		char pp[128];
-		sprintf(pp, "%d", pk);
-		char* ptr = strstr(last_ptr , pp);
-                last_ptr = ptr;
+	long i = 0;
+	long init_posit = posits[i];
+	char _pp[128];
+	sprintf(_pp, "%ld", init_posit);
+	char* last_ptr = strstr((char*)pi ,_pp);
+	for (int i = 1; i < posits.size(); ++i) {
+		long pk = posits[i];
+		sprintf(_pp, "%ld", pk);
+		char* ptr = strstr(last_ptr , _pp);
+		last_ptr = ptr;
 	}
 	return 0;
 }
