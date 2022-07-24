@@ -128,6 +128,9 @@ int main(int argc, char* argv[]) {
 		pp[nlength] = '\0';
 		ee[nlength] = '\0';
 		strrev(ee);
+		cout << endl << pp << endl;
+		cout << endl << ee << endl;
+		exit(2);
 		for (int i = 0; i < nlength; ++i) {
 			char nn = num[i % l];
 			char _pp = pp[i];
