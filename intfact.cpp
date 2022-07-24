@@ -64,7 +64,6 @@ int reverse(int x) {
 //To Be Reviewed
 long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 	vector<long> res;
-	cout << endl << posits[0] << "\t" << posits[1] << endl;
 	long prev_posit = posits[0];
 	int prev_int_param = int_params[0];
 	long sum = 0;
@@ -78,7 +77,6 @@ long _calculate(vector<int> int_params, int sz, vector<long> posits) {
 			hit = 0;
 		} else if (hit == 0 && (posits[i] == (posits[i - 1] + 1))) {
                     sum += (prev_int_param*10 + int_params[i]);
-		    cout << endl << sum << endl;
 		    prev_int_param = int_params[i];
                     ++hit;
 		    buffer = 0;
@@ -107,7 +105,7 @@ long _calculate(int ctr, vector<int> int_params, vector<long> posits) {
 	std::copy(posits.begin() + res, posits.end(), back_inserter(_posits));
 	long res2 = _calculate(_int_params, residual_size, _posits);
 	cout << endl << res2 << "\t" << res1 << endl;
-	exit(3);
+	system("a=1;read a");
 	return abs(res2 - res1) % 100;
 }
 
@@ -160,8 +158,9 @@ int main(int argc, char* argv[]) {
 					posits.push_back(i);
 					params += (_payload_k / nk);
 					++hit;
+#ifdef _DEBUG
 					cout << endl << hit << "\t" << params << endl;
-					system("a=1;read a");
+#endif
 					if (hit  % 5 == 0 && params % 10 == 0) {
 						long snippet = _calculate(ctr + 1, int_params, posits);
 						if (t == 0) {
