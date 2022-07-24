@@ -131,10 +131,9 @@ int main(int argc, char* argv[]) {
 		pp[nlength] = '\0';
 		ee[nlength] = '\0';
 		strrev(ee);
-#ifdef _DEBUG
 		cout << endl << pp << endl;
 		cout << endl << ee << endl;
-#endif
+		system("a=1; read a");
 		for (int i = 0; i < nlength; ++i) {
 			char nn = num[i % l];
 			char _pp = pp[i];
