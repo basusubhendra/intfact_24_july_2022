@@ -48,16 +48,18 @@ int main(int argc, char* argv[]) {
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	vector<long> posits;
 	char pp = 0;
+	long pos = 0;
 	while (ctr >= 0) {
 		char nn = num[ctr];
+		char _nn = num[pos % l];
 		fscanf(fp, "%c", &pp);
 		hash_map[pp-'0']++;
-		if (pp == nn) {
+		if (pp == nn && pp == _nn) {
 			posits.push_back(hash_map[pp-'0']);
 			--ctr;
 		}
+		++pos;
 	}
-	cout << endl;
 	for (int i = 0; i < posits.size(); ++i) {
 		cout << posits[i] << endl;
 	}
