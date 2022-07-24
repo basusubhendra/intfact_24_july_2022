@@ -110,7 +110,11 @@ int main(int argc, char* argv[]) {
 				cnt += _length(init_posit);
 				break;
 			}
+			if (p == last_ptr) {
+				break;
+			}
 			++cnt;
+			--p;
 		}	
 		factor += boost::lexical_cast<std::string>(cnt);
 		last_ptr = ptr;
