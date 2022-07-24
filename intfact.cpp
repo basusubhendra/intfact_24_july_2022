@@ -61,8 +61,9 @@ int main(int argc, char* argv[]) {
 		++pos;
 	}
 	for (int i = 0; i < posits.size(); ++i) {
-		cout << posits[i] << endl;
+		cout << posits[i] << "\t, ";
 	}
+	cout << endl;
 	std::string factor = "";
 	char* last_ptr = (char*) pi;
 	for (int i = 0; i < posits.size(); ++i) {
