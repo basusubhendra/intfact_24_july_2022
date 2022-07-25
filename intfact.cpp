@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
 		char nn2 = num[i - 1];
 		long pos1 = -1, pos2 = -1;
 		long idx = 0;
-		cout << nn1 << "\t" << nn2 << endl;
 		bool found = true;
 		while (1) {
 			char pp = 0;
