@@ -48,27 +48,61 @@ long reverse(long x) {
 	return rev;
 }
 
-long compute_distance(char* s1, char* s2, long& location) {
-	char* ptr1 = strstr((char*)e, s1);
-        char* ptr2 = strstr(ptr1, s2);
+long compute_distance(char* s1, char* s2, char*& location) {
+	char* ptr1 = strstr(location, s1);
+	char* ptr2 = strstr(ptr1 + 1, s2);
+	char* ptr3 = strstr(ptr2 + 1, s2);
+	while (ptr3 && (ptr3 - ptr2 + 1) == 2) {
+		ptr2 = ptr3;
+		ptr3 = strstr(ptr2 + 1, s2);
+	}
+	char* _ptr2 = ptr2;
 	long short_len = ptr2 - ptr1 + 1;
 	char* tmp = (char*) calloc(short_len + 1, sizeof(char));
 	strncpy(tmp, ptr1, short_len);
-	ptr1 = strstr(tmp, s1);
-	while (ptr1) {
-		ptr1 = strstr(ptr1, s1);
+	char* _tmp = tmp;
+#ifdef _DEBUG
+	cout << endl << "tmp\t" << tmp << endl;
+#endif
+	ptr1 = tmp;
+	char* _ptr1 = strstr(ptr1 + 1, s1);
+	while (_ptr1) {
+		ptr1 = strstr(_ptr1 + 1, s1);
+		if (ptr1) {
+			_ptr1 = ptr1;
+		} else {
+			break;
+		}
 	}
-	char* p = ptr1;
+	char* p = 0;
+	if (_ptr1) {
+		p = _ptr1;
+	} else {
+		p = ptr1;
+	}
+	ptr2 = strstr(p + 1, s2);
+	ptr3 = strstr(ptr2 + 1, s2);
+	while (ptr3 && (ptr3 - ptr2 + 1) == 2) {
+		ptr2 = ptr3;
+		ptr3 = strstr(ptr2 + 1, s2);
+	}
+#ifdef _DEBUG
+	cout << endl << "p\t" << p << endl;
+#endif
 	long distance = 0;
 	while (p != ptr2) {
+#ifdef _DEBUG
+		cout << *p << ',';
+#endif
 		if (*p == '0') {
 			distance = 0;
 		} 
 		++distance;
 		++p;
 	}
-	free(tmp);
-	return distance;
+	free(_tmp);
+	location = _ptr2 + 1;
+	return distance - 1;
 }
 
 int main(int argc, char* argv[]) {
@@ -79,13 +113,15 @@ int main(int argc, char* argv[]) {
 	int ctr = l - 1;
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	std::string factor = "";
-	long location = 0;
+	char* location = (char*) e;
 	long pos = 0, last_pos = 0;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
 		long pos1 = -1, pos2 = -1;
+#ifdef _DEBUG
 		cout << nn1 << "\t" << nn2 << endl;
+#endif
 		while (1) {
 			char pp = 0;
 			while (1) {
@@ -110,9 +146,13 @@ int main(int argc, char* argv[]) {
 		char* s_pos2 = (char*) calloc(128, sizeof(char));
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
+#ifdef _DEBUG
 		cout << s_pos1 << "\t" << s_pos2 << endl;
+#endif
 		long distance = compute_distance(s_pos1, s_pos2, location);
+#ifdef _DEBUG
 		cout << endl << distance << endl;
+#endif
 		free(s_pos1);
 		free(s_pos2);
 		factor += boost::lexical_cast<std::string>(distance);
