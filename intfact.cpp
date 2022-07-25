@@ -47,45 +47,69 @@ long reverse(long x) {
 	return rev;
 }
 
+long _locate_helper(char* ss, long loc, FILE* _c_pi, char& pp, bool &found) {
+	char* _ss = ss;
+	long l = strlen(ss);
+	long ctr = 0;
+	while (*ss != '\0') {
+		found = true;
+		fscanf(_c_pi, "%c", &pp);
+		if (pp == *ss) {
+			++ss;
+		} else {
+			break;
+		}
+	}
+	long _pos = ftello(_c_pi);
+	return _pos;
+}
+
 long _locate(char* ss, long loc, FILE* _c_pi) {
+	fseek(_c_pi, loc, SEEK_SET);
+	bool flag = false;
+	long _pos = 0;
 	char pp = 0;
 	char* _ss = ss;
-	fseek(_c_pi, loc, SEEK_SET);
+	bool found = false;
 	while (1) {
-		while (1) {
+		while (!flag) {
 			fscanf(_c_pi, "%c", &pp);
 			if (pp == *ss) {
 		                ++ss;
 				break;
 			}
 		}
-		while (*ss != '\0') {
-			fscanf(_c_pi, "%c", &pp);
-			if (pp == *ss) {
-				++ss;
-			} else {
-				break;
-			}
-		}
+		found = false;
+		_pos = _locate_helper(ss, loc, _c_pi, pp, found);
+		cout << endl << "_pos\t" << _pos << endl;
 		if (*ss == '\0') {
+			ss = _ss;
+			if (found && pp == *ss) {
+		                ++ss;
+				flag = true;
+			}
 			break;
 		} else {
 			ss = _ss;
 		}
 	}
-	return ftello(_c_pi);
+	return _pos;
 }
 
 long _compute_distance(long loc1, long loc2, FILE* _c_pi) {
 	fseek(_c_pi, loc1, SEEK_SET);
 	char pp = 0;
 	long distance = 0;
-	while (ftello(_c_pi) != loc2) {
+	while (1) {
 		fscanf(_c_pi, "%c", &pp);
 		if (pp == '0') {
 			distance = 0;
 		}
-		++distance;
+		if (ftello(_c_pi) == loc2) {
+			break;
+		} else {
+			++distance;
+		}
 	}
 	return distance;
 }
@@ -95,9 +119,19 @@ long compute_distance(char* s_pos1, char* s_pos2, long& loc1, long& loc2) {
 	fseek(calculator_pi, loc2, SEEK_SET);
 	loc1 = _locate(s_pos1, loc2, calculator_pi);
 	loc2 = _locate(s_pos2, loc1, calculator_pi);
+	cout << endl << loc1 << "\t" << loc2 << "\n";
 	long distance = _compute_distance(loc1, loc2, calculator_pi);
 	fclose(calculator_pi);
 	return distance;
+}
+
+long length(long x) {
+        long rev = 0;
+	while (x > 0) {
+		rev = rev*10 + (x % 10);
+		x /= 10;
+	}
+	return rev;
 }
 
 int main(int argc, char* argv[]) {
@@ -119,17 +153,13 @@ int main(int argc, char* argv[]) {
 			char pp = 0;
 			while (1) {
 				fscanf(comparator_pi, "%c", &pp);
-				cout << pp << "\t\t" << num[pos % l] << "\t\t" << nn1 << "\t\t" << nn2 << endl;
-				system("a=1;read a");
 				hash_map[pp-'0']++;
 				if ((pp == nn1) && (pp == num[pos % l])) {
 					pos1 = reverse(hash_map[pp-'0']);
 					last_pos = pos;
-					cout << endl << "N1 set" << endl;
 				}
 				if ((pp == nn2) && (pp == num[pos % l]) && (pos > last_pos)) {
 					pos2 = reverse(hash_map[pp-'0']);
-					cout << endl << "N2 set" << endl;
 					++pos;
 					break;
 				}
@@ -143,6 +173,10 @@ int main(int argc, char* argv[]) {
 		char* s_pos2 = (char*) calloc(128, sizeof(char));
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
+		int l1 = length(pos1);
+		int l2 = length(pos2);
+		s_pos1[l1] = '\0';
+		s_pos2[l2] = '\0';
 		cout << s_pos1 << "\t" << s_pos2 << endl;
 		long distance = compute_distance(s_pos1, s_pos2, loc1, loc2);
 		cout << endl << distance << endl;
