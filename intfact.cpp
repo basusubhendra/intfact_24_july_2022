@@ -47,6 +47,8 @@ long reverse(long x) {
 	return rev;
 }
 
+/////
+//TO BE REVIEWED
 long _locate_helper(char* ss, long loc, FILE* _c_pi, char& pp, bool &found) {
 	char* _ss = ss;
 	long l = strlen(ss);
@@ -54,6 +56,7 @@ long _locate_helper(char* ss, long loc, FILE* _c_pi, char& pp, bool &found) {
 	while (*ss != '\0') {
 		found = true;
 		fscanf(_c_pi, "%c", &pp);
+		cout << endl << "_pos\t" << ftello(_c_pi) << endl;
 		if (pp == *ss) {
 			++ss;
 		} else {
@@ -79,6 +82,7 @@ long _locate(char* ss, long loc, FILE* _c_pi) {
 				break;
 			}
 		}
+		cout << endl << "pos\t" << ftello(_c_pi) << endl;
 		found = false;
 		_pos = _locate_helper(ss, loc, _c_pi, pp, found);
 		cout << endl << "_pos\t" << _pos << endl;
@@ -95,6 +99,7 @@ long _locate(char* ss, long loc, FILE* _c_pi) {
 	}
 	return _pos;
 }
+/////////////////////
 
 long _compute_distance(long loc1, long loc2, FILE* _c_pi) {
 	fseek(_c_pi, loc1, SEEK_SET);
@@ -123,15 +128,6 @@ long compute_distance(char* s_pos1, char* s_pos2, long& loc1, long& loc2) {
 	long distance = _compute_distance(loc1, loc2, calculator_pi);
 	fclose(calculator_pi);
 	return distance;
-}
-
-long length(long x) {
-        long rev = 0;
-	while (x > 0) {
-		rev = rev*10 + (x % 10);
-		x /= 10;
-	}
-	return rev;
 }
 
 int main(int argc, char* argv[]) {
@@ -173,10 +169,6 @@ int main(int argc, char* argv[]) {
 		char* s_pos2 = (char*) calloc(128, sizeof(char));
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
-		int l1 = length(pos1);
-		int l2 = length(pos2);
-		s_pos1[l1] = '\0';
-		s_pos2[l2] = '\0';
 		cout << s_pos1 << "\t" << s_pos2 << endl;
 		long distance = compute_distance(s_pos1, s_pos2, loc1, loc2);
 		cout << endl << distance << endl;
