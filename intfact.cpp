@@ -52,26 +52,35 @@ long compute_distance(char* s1, char* s2, char*& location) {
 	char* ptr1 = strstr(location, s1);
 	char* ptr2 = strstr(ptr1 + 1, s2);
 	char* ptr3 = strstr(ptr2 + 1, s2);
+	bool duplicate = false;
 	while (ptr3 && (ptr3 - ptr2 + 1) == 2) {
 		ptr2 = ptr3;
 		ptr3 = strstr(ptr2 + 1, s2);
+		duplicate = true;
 	}
 	char* _ptr2 = ptr2;
-	long short_len = ptr2 - ptr1 + 1;
+	long short_len = strlen(s2) + ptr2 - ptr1;
 	char* tmp = (char*) calloc(short_len + 1, sizeof(char));
 	strncpy(tmp, ptr1, short_len);
 	char* _tmp = tmp;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	cout << endl << "tmp\t" << tmp << endl;
-#endif
+//#endif
 	ptr1 = tmp;
 	char* _ptr1 = strstr(ptr1 + 1, s1);
-	while (_ptr1) {
-		ptr1 = strstr(_ptr1 + 1, s1);
-		if (ptr1) {
-			_ptr1 = ptr1;
-		} else {
-			break;
+	if (_ptr1 >= ptr2) {
+		_ptr1 = 0;
+		//discard
+	} else {
+		while (_ptr1) {
+			ptr1 = strstr(_ptr1 + 1, s1);
+			if (ptr1 && ptr1 >= ptr2) {
+				break;
+			} else if (!ptr1) {
+				break;
+			} else {
+				_ptr1 = ptr1;
+			}
 		}
 	}
 	char* p = 0;
@@ -81,14 +90,16 @@ long compute_distance(char* s1, char* s2, char*& location) {
 		p = ptr1;
 	}
 	ptr2 = strstr(p + 1, s2);
-	ptr3 = strstr(ptr2 + 1, s2);
-	while (ptr3 && (ptr3 - ptr2 + 1) == 2) {
-		ptr2 = ptr3;
+	if (duplicate) {
 		ptr3 = strstr(ptr2 + 1, s2);
+		while (ptr3 && (ptr3 - ptr2 + 1) == 2) {
+			ptr2 = ptr3;
+			ptr3 = strstr(ptr2 + 1, s2);
+		}
 	}
-#ifdef _DEBUG
+#//ifdef _DEBUG
 	cout << endl << "p\t" << p << endl;
-#endif
+//#endif
 	long distance = 0;
 	while (p != ptr2) {
 #ifdef _DEBUG
