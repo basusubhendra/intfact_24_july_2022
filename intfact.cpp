@@ -119,9 +119,9 @@ int main(int argc, char* argv[]) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
 		long pos1 = -1, pos2 = -1;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		cout << nn1 << "\t" << nn2 << endl;
-#endif
+//#endif
 		while (1) {
 			char pp = 0;
 			while (1) {
@@ -129,9 +129,18 @@ int main(int argc, char* argv[]) {
 				hash_map[pp-'0']++;
 				if ((pp == nn1) && (pp == num[pos % l])) {
 					pos1 = reverse(hash_map[pp-'0']);
-					last_pos = pos;
+					pos++;
+					break;
 				}
-				if ((pp == nn2) && (pp == num[pos % l]) && (pos > last_pos)) {
+				pos++;
+			}
+			while (1) {
+				fscanf(comparator_pi, "%c", &pp);
+				hash_map[pp-'0']++;
+				if ((pp == nn1) && (pp == num[pos % l]) && (nn1 != nn2)) {
+					pos1 = reverse(hash_map[pp-'0']);
+				}
+				if ((pp == nn2) && (pp == num[pos % l])) {
 					pos2 = reverse(hash_map[pp-'0']);
 					++pos;
 					break;
@@ -146,9 +155,9 @@ int main(int argc, char* argv[]) {
 		char* s_pos2 = (char*) calloc(128, sizeof(char));
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		cout << s_pos1 << "\t" << s_pos2 << endl;
-#endif
+//#endif
 		long distance = compute_distance(s_pos1, s_pos2, location);
 #ifdef _DEBUG
 		cout << endl << distance << endl;
