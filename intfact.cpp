@@ -8,6 +8,7 @@
 #include "e.hpp"
 using namespace std;
 using namespace boost;
+#define NZEROS 2001052
 
 char* quotient(char* num, char* factor, bool& succ) {
 	mpz_t nz;
@@ -46,6 +47,21 @@ long reverse(long x) {
 		x /= 10;
 	}
 	return rev;
+}
+
+int binarySearch(int arr[], int x, int low, int high) {
+	if (low > high) {
+		return -1;
+	} else {
+		int mid = (low + high) / 2; 
+		if (x == arr[mid]) {
+			return mid;
+		} else if (x > arr[mid]) {
+			return binarySearch(arr, x, mid + 1, high);
+		} else {                        
+			return binarySearch(arr, x, low, mid - 1);
+		}
+	}
 }
 
 long compute_distance(char* s1, char* s2, char*& location) {
