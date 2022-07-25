@@ -5,6 +5,7 @@
 #include <gmp.h>
 #include <boost/lexical_cast.hpp>
 #include <iostream>
+#include "e.hpp"
 using namespace std;
 using namespace boost;
 
@@ -47,86 +48,26 @@ long reverse(long x) {
 	return rev;
 }
 
-/////
-//TO BE REVIEWED
-long _locate_helper(char* ss, long loc, FILE* _c_pi, char& pp, bool &found) {
-	char* _ss = ss;
-	long l = strlen(ss);
-	long ctr = 0;
-	while (*ss != '\0') {
-		found = true;
-		fscanf(_c_pi, "%c", &pp);
-		cout << endl << "_pos\t" << ftello(_c_pi) << endl;
-		if (pp == *ss) {
-			++ss;
-		} else {
-			break;
-		}
+long compute_distance(char* s1, char* s2, long& location) {
+	char* ptr1 = strstr((char*)e, s1);
+        char* ptr2 = strstr(ptr1, s2);
+	long short_len = ptr2 - ptr1 + 1;
+	char* tmp = (char*) calloc(short_len + 1, sizeof(char));
+	strncpy(tmp, ptr1, short_len);
+	ptr1 = strstr(tmp, s1);
+	while (ptr1) {
+		ptr1 = strstr(ptr1, s1);
 	}
-	long _pos = ftello(_c_pi);
-	return _pos;
-}
-
-long _locate(char* ss, long loc, FILE* _c_pi) {
-	fseek(_c_pi, loc, SEEK_SET);
-	bool flag = false;
-	long _pos = 0;
-	char pp = 0;
-	char* _ss = ss;
-	bool found = false;
-	while (1) {
-		while (!flag) {
-			fscanf(_c_pi, "%c", &pp);
-			if (pp == *ss) {
-		                ++ss;
-				break;
-			}
-		}
-		cout << endl << "pos\t" << ftello(_c_pi) << endl;
-		found = false;
-		_pos = _locate_helper(ss, loc, _c_pi, pp, found);
-		cout << endl << "_pos\t" << _pos << endl;
-		if (*ss == '\0') {
-			ss = _ss;
-			if (found && pp == *ss) {
-		                ++ss;
-				flag = true;
-			}
-			break;
-		} else {
-			ss = _ss;
-		}
-	}
-	return _pos;
-}
-/////////////////////
-
-long _compute_distance(long loc1, long loc2, FILE* _c_pi) {
-	fseek(_c_pi, loc1, SEEK_SET);
-	char pp = 0;
+	char* p = ptr1;
 	long distance = 0;
-	while (1) {
-		fscanf(_c_pi, "%c", &pp);
-		if (pp == '0') {
+	while (p != ptr2) {
+		if (*p == '0') {
 			distance = 0;
-		}
-		if (ftello(_c_pi) == loc2) {
-			break;
-		} else {
-			++distance;
-		}
+		} 
+		++distance;
+		++p;
 	}
-	return distance;
-}
-
-long compute_distance(char* s_pos1, char* s_pos2, long& loc1, long& loc2) {
-	FILE* calculator_pi = fopen64("./e.txt","r");
-	fseek(calculator_pi, loc2, SEEK_SET);
-	loc1 = _locate(s_pos1, loc2, calculator_pi);
-	loc2 = _locate(s_pos2, loc1, calculator_pi);
-	cout << endl << loc1 << "\t" << loc2 << "\n";
-	long distance = _compute_distance(loc1, loc2, calculator_pi);
-	fclose(calculator_pi);
+	free(tmp);
 	return distance;
 }
 
@@ -138,7 +79,7 @@ int main(int argc, char* argv[]) {
 	int ctr = l - 1;
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	std::string factor = "";
-	long loc1 = 0, loc2 = 0;
+	long location = 0;
 	long pos = 0, last_pos = 0;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
@@ -170,7 +111,7 @@ int main(int argc, char* argv[]) {
 		sprintf(s_pos1, "%ld", pos1);
 		sprintf(s_pos2, "%ld", pos2);
 		cout << s_pos1 << "\t" << s_pos2 << endl;
-		long distance = compute_distance(s_pos1, s_pos2, loc1, loc2);
+		long distance = compute_distance(s_pos1, s_pos2, location);
 		cout << endl << distance << endl;
 		free(s_pos1);
 		free(s_pos2);
