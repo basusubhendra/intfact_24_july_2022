@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
 		long pos1 = -1, pos2 = -1;
 		long idx = 0;
 		cout << nn1 << "\t" << nn2 << endl;
+		bool found = true;
 		while (1) {
 			char pp = 0;
 			while (1) {
@@ -59,22 +60,29 @@ int main(int argc, char* argv[]) {
 					++hit;
 				}
 				hash_map[pp-'0']++;
-				if ((pp == nn1) && (pp == num[pos % l]) && (nn1 != nn2)) {
-					pos1 = hash_map[pp-'0'];
-				}
-				if ((pp == nn2) && (pp == num[pos % l])) {
+				if (pp == num[pos % l] && (pp != nn2)) {
+					pos1 = -1;
+					++pos;
+					++i;
+					found = false;
+					break;
+				} else if ((pp == nn2) && (pp == num[pos % l])) {
 					pos2 = hash_map[pp-'0'];
 					++pos;
 					break;
 				}
 				++pos;
 			}
-			idx = binarySearch(zeros, (pos1*10 + pos2), 0, NZEROS);
-			if (idx != -1) {
+			if (found) {
+				idx = binarySearch(zeros, (pos1*10 + pos2), 0, NZEROS);
+				if (idx != -1) {
+					fprintf(zero_indices, "%ld,%ld\n", idx + 1, hit);
+					break;
+				}
+			} else {
 				break;
 			}
 		}
-		fprintf(zero_indices, "%ld,%ld\n", idx + 1, hit);
 	}
 	fclose(comparator_pi);
 	fclose(zero_indices);
