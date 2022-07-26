@@ -13,3 +13,4 @@ characterize
 pre_factorize
 factorize
 ./zero_indices.txt
+synthesis_output.txt
