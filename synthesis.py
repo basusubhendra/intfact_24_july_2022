@@ -7,12 +7,11 @@ f=open("./zero_indices.txt","r")
 c=f.readlines()
 f.close()
 waveform = []
-mp.prec = 256
-mp.dps = 256
+mp.prec = 64
+mp.dps = 64
 for line in c:
     l = str(line.rstrip())
     waveform.append(l)
-print(waveform)
 l = len(waveform)
 for k in range(0, int(l / 2)):
     wave1=waveform[k]
@@ -20,4 +19,3 @@ for k in range(0, int(l / 2)):
     z1 = str(zetazero(wave1).imag)
     z2 = str(zetazero(wave2).imag)
     print(z1, z2)
-
