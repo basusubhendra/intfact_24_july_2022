@@ -27,11 +27,10 @@ int main(int argc, char* argv[]) {
 	printf("\nNumber Entered was:%s\n", num);
 	long l = strlen(num);
 	FILE* comparator_pi = fopen64("./pi.txt","r");
-	FILE* zero_indices = fopen64("./zero_indices.txt","w");
 	int ctr = l - 1;
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	std::string factor = "";
-	long pos = 0;//, hit = 0;
+	long pos = 0;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
@@ -42,11 +41,6 @@ int main(int argc, char* argv[]) {
 			char pp = 0;
 			while (1) {
 				fscanf(comparator_pi, "%c", &pp);
-#if 0
-				if (pp == num[pos % l]) {
-					++hit;
-				}
-#endif
 				hash_map[pp-'0']++;
 				if ((pp == nn1) && (pp == num[pos % l])) {
 					pos1 = hash_map[pp-'0'];
@@ -57,11 +51,6 @@ int main(int argc, char* argv[]) {
 			}
 			while (1) {
 				fscanf(comparator_pi, "%c", &pp);
-#if 0
-				if (pp == num[pos % l]) {
-					++hit;
-				}
-#endif
 				hash_map[pp-'0']++;
 				if (pp == num[pos % l] && (pp != nn2)) {
 					pos1 = -1;
@@ -79,7 +68,6 @@ int main(int argc, char* argv[]) {
 			if (found) {
 				idx = binarySearch(zeros, (pos1*10 + pos2), 0, NZEROS);
 				if (idx != -1) {
-					fprintf(zero_indices, "%ld\n", idx + 1);
 					break;
 				}
 			} else {
@@ -87,7 +75,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+	printf("\n%ld\n", ftello(comparator_pi));
 	fclose(comparator_pi);
-	fclose(zero_indices);
 	return 0;
 }
