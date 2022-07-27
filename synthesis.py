@@ -26,8 +26,8 @@ def synthesize(z1, z2, n1, n2, rn1, rn2, t):
 num = str(sys.argv[1])
 rnum = num[::-1]
 l = len(num)
-if l % 2 == 0:
-    num = "0" + num
+num = "0" + num
+rnum = "0" + rnum
 f=open("./zero_indices.txt","r")
 c=f.readlines()
 f.close()
