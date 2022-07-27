@@ -6,9 +6,15 @@ from mpmath import *
 #synthesize num 
 # from z1 using z2
 def synthesize(z1, z2, n1, n2, rn1, rn2):
-    pass
+    print(n1, n2)
+    print(rn1, rn2)
+    print(z1)
+    print(z2)
+    print
+    print
+    input("Enter")
 
-num = str(argv[1])
+num = str(sys.argv[1])
 rnum = num[::-1]
 l = len(num)
 if l % 2 == 0:
@@ -25,6 +31,7 @@ for line in c:
     _l = str(line.rstrip())
     waveform.append(_l)
 _l = len(waveform)
+i = 0
 for k in range(0, int(_l / 2)):
     wave1=waveform[k]
     wave2=waveform[-(k+1)]
@@ -39,6 +46,7 @@ for k in range(0, int(_l / 2)):
     factor1, factor2 = synthesize(z1, z2, n1, n2, rn1, rn2)
     _factor1 = _factor1 + factor1
     _factor2 = _factor2 + factor2
+    i = i + 1
 _factor2 = _factor2[::-1]
 print(_factor1)
 print(_factor2)
