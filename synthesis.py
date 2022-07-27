@@ -14,7 +14,7 @@ def synthesize(z1, z2, n1, n2, rn1, rn2):
         print
         print
         input("Enter")
-    else t == 1:
+    elif t == 1:
         print(n2, n1)
         print(rn1, rn2)
         print(z1)
