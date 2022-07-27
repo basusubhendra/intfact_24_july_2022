@@ -9,6 +9,10 @@ def synthesize(z1, z2, num):
     pass
 
 num = str(argv[1])
+rnum = num[::-1]
+l = len(num)
+if l % 2 == 0:
+    num = "0" + num
 f=open("./zero_indices.txt","r")
 c=f.readlines()
 f.close()
