@@ -5,7 +5,7 @@ from mpmath import *
 
 #synthesize num 
 # from z1 using z2
-def synthesize(z1, z2, n1, n2, rn1, rn2):
+def synthesize(z1, z2, n1, n2, rn1, rn2, t):
     if t == 0:
         print(n1, n2)
         print(rn2, rn1)
