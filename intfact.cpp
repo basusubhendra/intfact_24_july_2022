@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-	printf("\n%ld\n", ftello(comparator_pi));
+	long f_pos = ftello(comparator_pi);
 	fclose(comparator_pi);
 	return 0;
 }
