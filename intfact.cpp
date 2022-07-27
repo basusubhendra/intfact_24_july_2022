@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include "zeros.hpp"
+#include "e.hpp"
 using namespace std;
 #define NZEROS 2001052
 
@@ -20,6 +21,16 @@ int binarySearch(int arr[], int x, int low, int high) {
 			return binarySearch(arr, x, low, mid - 1);
 		}
 	}
+}
+
+void* strrev(char* ee) {
+	long l = strlen(ee);
+	for (int i = 0; i < int(l / 2.0); ++i) {
+		char t = ee[i];
+		ee[i] = ee[l - 1 - i];
+		ee[l - 1 - i] = t;
+	}
+	return 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -76,6 +87,11 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	long f_pos = ftello(comparator_pi);
+	printf("\nOutput of Analysis = %ld\n", f_pos);
+        char* ee = (char*) calloc(f_pos + 1, sizeof(char));
+	strncpy(ee, e, f_pos);
+	strrev(ee);
+	printf("\n%s\n", ee);
 	fclose(comparator_pi);
 	return 0;
 }
