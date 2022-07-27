@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include "zeros.hpp"
-#include "e.hpp"
+#include "pi.hpp"
 using namespace std;
 #define NZEROS 2001052
 
@@ -88,10 +88,10 @@ int main(int argc, char* argv[]) {
 	}
 	long f_pos = ftello(comparator_pi);
 	printf("\nOutput of Analysis = %ld\n", f_pos);
-        char* ee = (char*) calloc(f_pos + 1, sizeof(char));
-	strncpy(ee, e, f_pos);
-	strrev(ee);
-	printf("\n%s\n", ee);
+        char* pp = (char*) calloc(f_pos + 1, sizeof(char));
+	strncpy(pp, pi, f_pos);
+	strrev(pp);
+	printf("\n%s\n", pp);
 	fclose(comparator_pi);
 	return 0;
 }
