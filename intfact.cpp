@@ -35,7 +35,9 @@ void* strrev(char* ee) {
 
 int main(int argc, char* argv[]) {
 	char* num = strdup(argv[1]);
+#ifdef _DEBUG
 	printf("\nNumber Entered was:%s\n", num);
+#endif
 	long l = strlen(num);
 	FILE* comparator_pi = fopen64("./pi.txt","r");
 	int ctr = l - 1;
@@ -87,7 +89,9 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	long f_pos = ftello(comparator_pi);
+#ifdef _DEBUG
 	printf("\nOutput of Analysis = %ld\n", f_pos);
+#endif
         char* pp = (char*) calloc(f_pos + 1, sizeof(char));
 	strncpy(pp, pi, f_pos);
 	strrev(pp);
