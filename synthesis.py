@@ -47,8 +47,8 @@ for k in range(0, int(_l / 2)):
     wave2=waveform[-(k+1)]
     z1 = str(zetazero(wave1).imag)
     z2 = str(zetazero(wave2).imag)
-    z1.replace(".","0")
-    z2.replace(".","0")
+    z1 = z1.replace(".","0")
+    z2 = z2.replace(".","0")
     n1 = num[i]
     n2 = num[i + 1]
     rn1 = rnum[i]
