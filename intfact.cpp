@@ -44,6 +44,7 @@ int main(int argc, char* argv[]) {
 	long* hash_map = (long*) calloc(10, sizeof(long));
 	std::string factor = "";
 	long pos = 0;
+	vector<char*> posits;
 	for (int i = ctr; i > 0; --i) {
 		char nn1 = num[i];
 		char nn2 = num[i - 1];
@@ -81,6 +82,12 @@ int main(int argc, char* argv[]) {
 			if (found) {
 				idx = binarySearch(zeros, (pos1*10 + pos2), 0, NZEROS);
 				if (idx != -1) {
+					long f_pos = ftello(comparator_pi);
+					char* pp = (char*) calloc(f_pos + 1, sizeof(char));
+					strncpy(pp, pi, f_pos);
+					strrev(pp);
+					posits.push_back(f_pos);
+					printf("\n%s\n", pp);
 					break;
 				}
 			} else {
@@ -88,14 +95,6 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-	long f_pos = ftello(comparator_pi);
-#ifdef _DEBUG
-	printf("\nOutput of Analysis = %ld\n", f_pos);
-#endif
-        char* pp = (char*) calloc(f_pos + 1, sizeof(char));
-	strncpy(pp, pi, f_pos);
-	strrev(pp);
-	printf("\n%s\n", pp);
 	fclose(comparator_pi);
 	return 0;
 }
