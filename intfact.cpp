@@ -3,6 +3,7 @@
 #include <string.h>
 #include <string>
 #include <iostream>
+#include <vector>
 #include "zeros.hpp"
 #include "pi.hpp"
 using namespace std;
@@ -86,7 +87,7 @@ int main(int argc, char* argv[]) {
 					char* pp = (char*) calloc(f_pos + 1, sizeof(char));
 					strncpy(pp, pi, f_pos);
 					strrev(pp);
-					posits.push_back(f_pos);
+					posits.push_back(pp);
 					printf("\n%s\n", pp);
 					break;
 				}
