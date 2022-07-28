@@ -97,5 +97,10 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	fclose(comparator_pi);
+	FILE* zeros = fopen64("./pp_zeros.txt","w");
+	for (int i = 0; i < posits.size(); ++i) {
+		fprintf(zeros, "%s\n", posits[i]);
+	}
+	fclose(zeros);
 	return 0;
 }
