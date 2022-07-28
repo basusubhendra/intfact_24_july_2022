@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
 					strncpy(pp, pi, f_pos);
 					strrev(pp);
 					posits.push_back(pp);
-					printf("\n%s\n", pp);
+					//printf("\n%s\n", pp);
 					break;
 				}
 			} else {
